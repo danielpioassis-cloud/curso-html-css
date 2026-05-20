@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vídeos com HTML5</title>
+</head>
+<body>
+    <h1>Inserindo vídeos hospedados localmente</h1>
+        <p>Esse vídeo está hopsedado no meu próprio servidor</p>
+
+    <video width="560" height="315" poster="imagens/treino-de-hoje.png" controls loop>
+        <source src="midia/meuvideo.mp4" type="video/mp4">
+        <source src="midia/meuvideo.webm" type="video/webm">
+        Seu navegador não suporta o elemento de vídeo.
+    </video>
+
+<hr>
+
+    <h1>Adicionando vídeos do Youtube</h1>
+        <p>Esse vídeo está hospedado no Youtube, e eu estou usando a tag iframe para inseri-lo na minha página</p>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/EFmxPMdBqmU?si=NYRdl31lhpXPUG_z" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        
+</body>
+</html>
