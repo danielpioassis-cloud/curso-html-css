@@ -150,6 +150,52 @@ export async function renderDashboard() {
   await _buildCatChart();
   await _buildDashTable();
   await _buildMetas();
+  await _buildSaldoBanco();
+}
+
+/* Saldo do banco ao vivo: base definida pelo usuário + todas as movimentações */
+async function _saldoBancoNet() {
+  const all = await getTxns();
+  return sumBy(all.filter(t => t.tipo === 'receita'), 'valor')
+       - sumBy(all.filter(t => t.tipo === 'despesa'), 'valor');
+}
+
+async function _buildSaldoBanco() {
+  if (!el('kpi-banco')) return;
+  const net      = await _saldoBancoNet();
+  const baseMeta = await db.get('_meta', 'saldo_banco_base');
+  const base     = baseMeta?.value ?? 0;
+  const saldo    = base + net;
+
+  el('kpi-banco').textContent = fmt(saldo);
+  el('kpi-banco').style.color = saldo < 0 ? 'var(--red)' : '';
+  const d = el('delta-banco');
+  if (d) {
+    const definido = baseMeta != null;
+    d.textContent = definido ? '↻ atualizado ao vivo' : 'clique para definir';
+  }
+}
+
+async function openSaldoBancoModal() {
+  const net      = await _saldoBancoNet();
+  const baseMeta = await db.get('_meta', 'saldo_banco_base');
+  const base     = baseMeta?.value ?? 0;
+  el('bancoInput').value     = (base + net).toFixed(2);
+  el('bancoHint').textContent= `Movimentação registrada até agora: ${fmt(net)}`;
+  el('modalSaldoBanco').classList.add('open');
+  el('bancoInput').focus();
+}
+const closeSaldoBancoModal = () => el('modalSaldoBanco').classList.remove('open');
+
+async function saveSaldoBanco() {
+  const atual = parseFloat(el('bancoInput').value);
+  if (isNaN(atual)) { toast('Informe um valor válido.', 'error'); return; }
+  const net  = await _saldoBancoNet();
+  const base = atual - net;                       // base = saldo atual − movimentações já lançadas
+  await db.put('_meta', { key: 'saldo_banco_base', value: base });
+  closeSaldoBancoModal();
+  toast('🏦 Saldo do banco atualizado!', 'success');
+  await _buildSaldoBanco();
 }
 
 async function _buildFluxoChart() {
@@ -858,6 +904,13 @@ export function init() {
 
   /* Topbar: nova transação */
   el('btnAddTransaction').addEventListener('click', () => openTransactionModal());
+
+  /* Card Saldo Banco */
+  el('cardSaldoBanco')?.addEventListener('click', openSaldoBancoModal);
+  el('bancoModalClose')?.addEventListener('click', closeSaldoBancoModal);
+  el('bancoCancel')?.addEventListener('click', closeSaldoBancoModal);
+  el('bancoSave')?.addEventListener('click', saveSaldoBanco);
+  el('modalSaldoBanco')?.addEventListener('click', e => { if (e.target===e.currentTarget) closeSaldoBancoModal(); });
 
   /* Modal transação */
   el('modalClose').addEventListener('click', closeTransactionModal);

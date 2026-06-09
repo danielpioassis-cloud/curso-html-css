@@ -323,6 +323,7 @@ input, select, textarea { font-family: var(--font); }
 .kpi-card--blue::after   { background: var(--blue); }
 .kpi-card--purple::after { background: var(--purple); }
 .kpi-card--amber::after  { background: var(--amber); }
+.kpi-card--teal::after   { background: #06b6d4; }
 
 .kpi-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
 
@@ -362,6 +363,10 @@ input, select, textarea { font-family: var(--font); }
 .kpi-card--blue   .kpi-card__icon { background: var(--blue-dim); color: var(--blue); }
 .kpi-card--purple .kpi-card__icon { background: var(--purple-dim); color: var(--purple); }
 .kpi-card--amber  .kpi-card__icon { background: var(--amber-dim); color: var(--amber); }
+.kpi-card--teal   .kpi-card__icon { background: rgba(6,182,212,.15); color: #06b6d4; }
+
+/* Dashboard com 5 cards */
+.kpi-grid--5 { grid-template-columns: repeat(5, 1fr); }
 
 /* ── CARDS ── */
 .card {
@@ -1626,8 +1631,16 @@ select.input option, .select option { background: var(--surface2); }
   font-size: .7rem;
 }
 
-/* ═══ KPI clicável ═══ */
-.kpi-card--link { cursor: pointer; text-decoration: none; transition: transform .15s, box-shadow .15s; }
+/* ═══ KPI clicável (funciona em <a> e <button>) ═══ */
+.kpi-card--link {
+  cursor: pointer;
+  text-decoration: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  width: 100%;
+  transition: transform .15s, box-shadow .15s;
+}
 .kpi-card--link:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,.3); }
 
 /* ═══ PREVISIBILIDADE (Dashboard) ═══ */
