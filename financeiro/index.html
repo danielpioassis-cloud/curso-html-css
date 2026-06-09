@@ -110,6 +110,17 @@
   </nav>
 
   <div class="sidebar__footer">
+    <div class="backup-bar">
+      <button class="backup-btn" id="btnExportData" title="Baixar backup de todos os dados">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Backup</span>
+      </button>
+      <button class="backup-btn" id="btnImportData" title="Restaurar dados de um arquivo de backup">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Restaurar</span>
+      </button>
+      <input type="file" id="importFileInput" accept="application/json,.json" style="display:none" />
+    </div>
     <div class="user-card">
       <div class="user-card__avatar">D</div>
       <div class="user-card__info">

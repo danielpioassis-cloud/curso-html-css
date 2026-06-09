@@ -207,6 +207,55 @@ class Database {
   }
 
   /* ══════════════════════════════════════════════════
+     BACKUP — exportar / importar tudo
+     ══════════════════════════════════════════════════ */
+  clear(storeName) {
+    return new Promise((resolve, reject) => {
+      const tx  = this._idb.transaction(storeName, 'readwrite');
+      const req = tx.objectStore(storeName).clear();
+      req.onsuccess = () => resolve();
+      req.onerror   = () => reject(req.error);
+    });
+  }
+
+  _putAll(storeName, records) {
+    return new Promise((resolve, reject) => {
+      const tx    = this._idb.transaction(storeName, 'readwrite');
+      const store = tx.objectStore(storeName);
+      records.forEach(r => store.put(r));
+      tx.oncomplete = () => resolve(records.length);
+      tx.onerror    = () => reject(tx.error);
+    });
+  }
+
+  /* Lê todas as stores e devolve um objeto serializável */
+  async exportAll() {
+    const names  = [...this._idb.objectStoreNames];
+    const stores = {};
+    for (const n of names) stores[n] = await this.getAll(n);
+    return {
+      _app:        'LifeControl',
+      _dbVersion:  DB_VERSION,
+      _exportedAt: new Date().toISOString(),
+      stores,
+    };
+  }
+
+  /* Restaura um backup. Substitui TODOS os dados existentes. */
+  async importAll(payload) {
+    const stores = payload?.stores ?? payload;
+    if (!stores || typeof stores !== 'object') throw new Error('Backup inválido.');
+    const names = [...this._idb.objectStoreNames];
+    let total = 0;
+    for (const n of names) {
+      if (!Array.isArray(stores[n])) continue;
+      await this.clear(n);
+      total += await this._putAll(n, stores[n]);
+    }
+    return total;
+  }
+
+  /* ══════════════════════════════════════════════════
      MIGRAÇÃO DO LOCALSTORAGE → INDEXEDDB
      Executa apenas uma vez (flag ls_migrated em _meta)
      ══════════════════════════════════════════════════ */

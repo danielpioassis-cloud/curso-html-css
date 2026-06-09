@@ -14,7 +14,7 @@
 import { db }        from './core/db.js';
 import { router }    from './core/router.js';
 import { store, EVENTS } from './core/store.js';
-import { toast }     from './core/ui.js';
+import { toast, uiConfirm } from './core/ui.js';
 import * as financeiro from './modules/financeiro/index.js';
 import * as goals         from './modules/goals/index.js';
 import * as negocios      from './modules/negocios/index.js';
@@ -77,6 +77,58 @@ async function boot() {
   window._toggleNavGroup = id => {
     document.getElementById(`navg-${id}`)?.classList.toggle('open');
   };
+
+  /* ── Backup: exportar / importar todos os dados ── */
+  const exportBtn = document.getElementById('btnExportData');
+  const importBtn = document.getElementById('btnImportData');
+  const fileInput = document.getElementById('importFileInput');
+
+  exportBtn?.addEventListener('click', async () => {
+    try {
+      const data = await db.exportAll();
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url  = URL.createObjectURL(blob);
+      const stamp = new Date().toISOString().slice(0, 10);
+      const a = Object.assign(document.createElement('a'), {
+        href: url, download: `lifecontrol-backup-${stamp}.json`,
+      });
+      document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+      toast('💾 Backup baixado! Guarde o arquivo em local seguro.', 'success', 5000);
+    } catch (e) {
+      console.error('[backup] export falhou:', e);
+      toast('Erro ao gerar backup.', 'error');
+    }
+  });
+
+  importBtn?.addEventListener('click', () => fileInput?.click());
+
+  fileInput?.addEventListener('change', async e => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    fileInput.value = '';
+    let payload;
+    try {
+      payload = JSON.parse(await file.text());
+    } catch {
+      toast('Arquivo inválido (não é um backup JSON).', 'error');
+      return;
+    }
+    const ok = await uiConfirm(
+      'Restaurar este backup vai SUBSTITUIR todos os dados atuais deste navegador pelos do arquivo. Deseja continuar?',
+      { title: '♻️ Restaurar backup', okLabel: 'Sim, restaurar', danger: true }
+    );
+    if (!ok) return;
+    try {
+      const total = await db.importAll(payload);
+      store.emit(EVENTS.TRANSACTION_CHANGED);
+      toast(`✅ Backup restaurado! ${total} registros importados.`, 'success', 5000);
+      setTimeout(() => location.reload(), 900);
+    } catch (err) {
+      console.error('[backup] import falhou:', err);
+      toast('Erro ao restaurar backup.', 'error');
+    }
+  });
 
   /* Topbar contextual — troca ações ao mudar de rota */
   window.addEventListener('hashchange', () => {
