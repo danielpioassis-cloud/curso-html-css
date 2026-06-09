@@ -32,6 +32,10 @@ const HABIT_ICONS = ['💪','📚','🧘','🏃','💧','🥗','💤','✍️','
    SEED
    ════════════════════════════════════════ */
 export async function seedProdutividadeDemo() {
+  const seeded = await db.get('_meta', 'produtividade_seeded');
+  if (seeded?.value) return;
+  await db.put('_meta', { key: 'produtividade_seeded', value: true });
+
   if ((await db.getAll('projects')).length) return;
 
   const p1 = await db.insert('projects', { nome:'Painel de Vida', cor:'#3b82f6', descricao:'Sistema de controle pessoal integrado', status:'ativo', criadaEm: today() });

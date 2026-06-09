@@ -36,6 +36,10 @@ let _chartCalc      = null;
    SEED
    ════════════════════════════════════════ */
 export async function seedInvestimentosDemo() {
+  const seeded = await db.get('_meta', 'investimentos_seeded');
+  if (seeded?.value) return;
+  await db.put('_meta', { key: 'investimentos_seeded', value: true });
+
   if ((await db.getAll('investments')).length) return;
   const demos = [
     { ativo:'Tesouro Selic 2027',   categoria:'Tesouro Direto', valor_investido:10000, valor_atual:10850, data_inicio:'2025-01-10', corretora:'Nubank',  obs:'' },

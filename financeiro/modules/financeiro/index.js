@@ -79,6 +79,10 @@ async function monthlyData(months = 6) {
    SEED — popula o banco com dados demo
    ════════════════════════════════════════ */
 export async function seedDemo() {
+  const seeded = await db.get('_meta', 'financeiro_seeded');
+  if (seeded?.value) return;
+  await db.put('_meta', { key: 'financeiro_seeded', value: true });
+
   const existing = await db.getAll('transactions');
   if (existing.length) return;
 
@@ -131,7 +135,6 @@ export async function renderDashboard() {
   const rec  = sumBy(cur.filter(t => t.tipo==='receita'), 'valor');
   const des  = sumBy(cur.filter(t => t.tipo==='despesa'), 'valor');
   const sal  = rec - des;
-  const eco  = Math.max(0, sal * 0.3);
   const recP = sumBy(prv.filter(t => t.tipo==='receita'), 'valor');
   const desP = sumBy(prv.filter(t => t.tipo==='despesa'), 'valor');
   const salP = recP - desP;
@@ -139,11 +142,9 @@ export async function renderDashboard() {
   el('kpi-receitas').textContent = fmt(rec);
   el('kpi-despesas').textContent = fmt(des);
   el('kpi-saldo').textContent    = fmt(sal);
-  el('kpi-economia').textContent = fmt(eco);
   el('delta-receitas').textContent  = deltaLabel(rec, recP);
   el('delta-despesas').textContent  = deltaLabel(des, desP);
   el('delta-saldo').textContent     = deltaLabel(sal, salP);
-  el('delta-economia').textContent  = '';
 
   await _buildFluxoChart();
   await _buildCatChart();

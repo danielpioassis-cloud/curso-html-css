@@ -66,6 +66,10 @@ const MOD_COLORS = {
    SEED
    ═══════════════════════════════════════════ */
 export async function seedGoalsDemo() {
+  const seeded = await db.get('_meta', 'goals_seeded');
+  if (seeded?.value) return;
+  await db.put('_meta', { key: 'goals_seeded', value: true });
+
   const existing = await db.getAll('goals');
   if (existing.length) return;
 

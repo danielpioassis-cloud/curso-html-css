@@ -30,6 +30,10 @@ const ALL_CATS = [...new Set([...CATS_RECEITA, ...CATS_DESPESA])].sort();
    SEED
    ════════════════════════════════════════ */
 export async function seedNegociosDemo() {
+  const seeded = await db.get('_meta', 'negocios_seeded');
+  if (seeded?.value) return;
+  await db.put('_meta', { key: 'negocios_seeded', value: true });
+
   if ((await db.getAll('businesses')).length) return;
   const b1 = await db.insert('businesses', { nome:'Kalashii Dev', tipo:'MEI', descricao:'Desenvolvimento web e apps', cor:'#3b82f6', pro_labore:4500, criadaEm: today() });
   const b2 = await db.insert('businesses', { nome:'Consultoria Digital', tipo:'Autônomo', descricao:'Mentoria e consultoria tech', cor:'#8b5cf6', pro_labore:3000, criadaEm: today() });

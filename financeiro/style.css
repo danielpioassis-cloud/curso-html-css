@@ -1626,6 +1626,10 @@ select.input option, .select option { background: var(--surface2); }
   font-size: .7rem;
 }
 
+/* ═══ KPI clicável ═══ */
+.kpi-card--link { cursor: pointer; text-decoration: none; transition: transform .15s, box-shadow .15s; }
+.kpi-card--link:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,.3); }
+
 /* ═══ PREVISIBILIDADE (Dashboard) ═══ */
 .prev-card { margin-top: 1.25rem; }
 .prev-grid {

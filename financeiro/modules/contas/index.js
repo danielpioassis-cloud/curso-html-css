@@ -45,6 +45,12 @@ const STATUS_INFO = {
    SEED
    ════════════════════════════════════════ */
 export async function seedContasDemo() {
+  /* Só semeia UMA vez na vida do banco. Depois disso, mesmo que o usuário
+     apague tudo, não volta mais (flag em _meta). */
+  const seeded = await db.get('_meta', 'contas_seeded');
+  if (seeded?.value) return;
+  await db.put('_meta', { key: 'contas_seeded', value: true });
+
   if ((await db.getAll('contas')).length) return;
   const now = new Date(), y = now.getFullYear(), m = now.getMonth();
   const dia = d => new Date(y, m, d).toISOString().split('T')[0];
@@ -225,6 +231,26 @@ export async function renderPrevisibilidade() {
   const gastosFixos = sumBy(contas, 'valor');
   const jaPago      = sumBy(contas, 'valor_pago');
   const aPagar      = gastosFixos - jaPago;
+
+  /* KPI "Contas a Pagar" no dashboard */
+  if (el('kpi-contas')) {
+    el('kpi-contas').textContent = fmt(aPagar);
+    const pendentes = contas.filter(c => statusReal(c) !== 'paga').length;
+    const atrasadas = contas.filter(c => statusReal(c) === 'atrasada').length;
+    const delta = el('delta-contas');
+    if (delta) {
+      if (atrasadas > 0) {
+        delta.textContent = `⚠️ ${atrasadas} atrasada${atrasadas > 1 ? 's' : ''}`;
+        delta.style.color = 'var(--red)';
+      } else if (pendentes > 0) {
+        delta.textContent = `${pendentes} conta${pendentes > 1 ? 's' : ''} pendente${pendentes > 1 ? 's' : ''}`;
+        delta.style.color = '';
+      } else {
+        delta.textContent = '✅ tudo pago';
+        delta.style.color = 'var(--green)';
+      }
+    }
+  }
 
   /* Gastos variáveis reais do mês (transações pessoais de despesa) */
   const now  = new Date();
