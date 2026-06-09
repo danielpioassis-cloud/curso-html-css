@@ -1631,6 +1631,39 @@ select.input option, .select option { background: var(--surface2); }
   font-size: .7rem;
 }
 
+/* ═══ METAS — integração automática ═══ */
+.goal-auto-badge {
+  font-size: .65rem;
+  font-weight: 700;
+  padding: .15rem .45rem;
+  border-radius: 99px;
+  background: rgba(6,182,212,.18);
+  color: #06b6d4;
+  white-space: nowrap;
+}
+.goal-auto-note {
+  display: inline-flex;
+  align-items: center;
+  font-size: .72rem;
+  font-weight: 600;
+  color: #06b6d4;
+}
+.form-hint {
+  font-size: .72rem;
+  color: var(--text3);
+  margin: .35rem 0 0;
+  line-height: 1.4;
+}
+
+/* Habit dots viram botões clicáveis */
+button.habit-dot {
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  transition: transform .12s, background .15s;
+}
+button.habit-dot:hover { transform: scale(1.18); border-color: var(--accent); }
+
 /* ═══ BACKUP (sidebar footer) ═══ */
 .backup-bar {
   display: flex;

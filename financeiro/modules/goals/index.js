@@ -24,7 +24,7 @@
 import { db }                from '../../core/db.js';
 import { router }            from '../../core/router.js';
 import { store, EVENTS }     from '../../core/store.js';
-import { fmt, fmtDate, today, toast } from '../../core/ui.js';
+import { fmt, fmtDate, today, toast, uiConfirm, sumBy } from '../../core/ui.js';
 
 /* ── Cache ── */
 let _goals = null;
@@ -61,6 +61,55 @@ const MOD_COLORS = {
   produtividade: '#f59e0b',
   negocios     : '#06b6d4',
 };
+
+/* ── Fontes automáticas: conectam a meta a dados reais de outras áreas ── */
+const FONTES = [
+  { key: 'manual',             label: '✍️ Manual (eu atualizo)',          unidade: null,       hint: 'Você atualiza o progresso à mão pelo botão "Atualizar".' },
+  { key: 'saldo_banco',        label: '🏦 Saldo do banco',                unidade: 'R$',       hint: 'O progresso acompanha o saldo da sua conta automaticamente.' },
+  { key: 'negocios_receita',   label: '💼 Receita de negócios (total)',   unidade: 'R$',       hint: 'Soma de todas as receitas lançadas nas empresas.' },
+  { key: 'negocios_lucro',     label: '💼 Lucro de negócios (total)',     unidade: 'R$',       hint: 'Receitas menos despesas das empresas.' },
+  { key: 'tarefas_concluidas', label: '✅ Tarefas concluídas',            unidade: 'tarefas',  hint: 'Conta as tarefas marcadas como concluídas na Produtividade.' },
+  { key: 'habito',             label: '🔥 Check-ins de um hábito',        unidade: 'dias',     hint: 'Conta os check-ins de um hábito específico.' },
+];
+const isAuto = fonte => fonte && fonte !== 'manual';
+
+/* Lê dados de outras áreas para calcular metas automáticas (sem acoplar módulos) */
+async function _buildAutoCtx() {
+  const txns       = await db.getAll('transactions');
+  const bizR       = sumBy(txns.filter(t => t.business_id != null && t.tipo === 'receita'), 'valor');
+  const bizD       = sumBy(txns.filter(t => t.business_id != null && t.tipo === 'despesa'), 'valor');
+  const personal   = txns.filter(t => !t.business_id || (t.cat === 'Salário' && t.desc?.startsWith('Pró Labore')));
+  const net        = sumBy(personal.filter(t => t.tipo === 'receita'), 'valor')
+                   - sumBy(personal.filter(t => t.tipo === 'despesa'), 'valor');
+  const baseMeta   = await db.get('_meta', 'saldo_banco_base');
+  const saldoBanco = (baseMeta?.value ?? 0) + net;
+  const tasks      = await db.getAll('tasks');
+  const tarefasDone= tasks.filter(t => t.status === 'done').length;
+  const logs       = await db.getAll('habit_logs');
+  const habitCheck = {};
+  logs.forEach(l => { habitCheck[l.habit_id] = (habitCheck[l.habit_id] ?? 0) + 1; });
+  return { saldoBanco, bizReceita: bizR, bizLucro: bizR - bizD, tarefasDone, habitCheck };
+}
+
+function _autoAtual(g, ctx) {
+  switch (g.fonte) {
+    case 'saldo_banco':        return Math.max(0, ctx.saldoBanco);
+    case 'negocios_receita':   return ctx.bizReceita;
+    case 'negocios_lucro':     return Math.max(0, ctx.bizLucro);
+    case 'tarefas_concluidas': return ctx.tarefasDone;
+    case 'habito':             return ctx.habitCheck[g.habit_id] ?? 0;
+    default:                   return g.atual;
+  }
+}
+
+/* Resolve uma meta para os valores efetivos (atual/status ao vivo se for automática) */
+function _resolve(g, ctx) {
+  if (!isAuto(g.fonte)) return { ...g, _auto: false };
+  const atual  = _autoAtual(g, ctx);
+  const status = (g.meta > 0 && atual >= g.meta) ? 'concluida'
+               : (g.status === 'concluida' ? 'ativa' : g.status);
+  return { ...g, atual, status, _auto: true };
+}
 
 /* ═══════════════════════════════════════════
    SEED
@@ -103,7 +152,10 @@ export async function renderMetas() {
   const filterMod    = el('goalFilterMod').value;
   const filterStatus = el('goalFilterStatus').value;
 
-  let goals = await getGoals();
+  const ctx      = await _buildAutoCtx();
+  const resolved = (await getGoals()).map(g => _resolve(g, ctx));
+
+  let goals = resolved;
   if (filterMod)    goals = goals.filter(g => g.modulo  === filterMod);
   if (filterStatus) goals = goals.filter(g => g.status  === filterStatus);
 
@@ -115,12 +167,11 @@ export async function renderMetas() {
     return 0;
   });
 
-  await _renderKpis();
+  _renderKpis(resolved);
   _renderCards(goals);
 }
 
-async function _renderKpis() {
-  const all      = await getGoals();
+function _renderKpis(all) {
   const ativas   = all.filter(g => g.status === 'ativa').length;
   const concl    = all.filter(g => g.status === 'concluida').length;
   const total    = all.length;
@@ -182,6 +233,7 @@ function _goalCardHTML(g) {
       <div class="goal-card__top" style="background:${g.cor ?? MOD_COLORS[g.modulo] ?? '#3b82f6'}22;border-left:3px solid ${g.cor ?? MOD_COLORS[g.modulo] ?? '#3b82f6'}">
         <div class="goal-card__meta">
           <span class="goal-mod-badge">${modInfo.emoji} ${modInfo.label}</span>
+          ${g._auto ? '<span class="goal-auto-badge" title="Atualiza sozinha com dados do sistema">🔗 Auto</span>' : ''}
           <span class="badge ${STATUS_CLS[g.status] ?? ''}">${STATUS_LABEL[g.status] ?? g.status}</span>
         </div>
         <h4 class="goal-card__title">${g.titulo}</h4>
@@ -202,7 +254,9 @@ function _goalCardHTML(g) {
       </div>
 
       <div class="goal-card__footer">
-        <button class="btn btn--ghost btn--xs" onclick="window._goals.openProgressModal(${g.id})">📈 Atualizar</button>
+        ${g._auto
+          ? '<span class="goal-auto-note">🔗 Atualização automática</span>'
+          : `<button class="btn btn--ghost btn--xs" onclick="window._goals.openProgressModal(${g.id})">📈 Atualizar</button>`}
         <div>
           <button class="btn-icon" onclick="window._goals.openGoalModal(${g.id})" title="Editar">✏️</button>
           <button class="btn-icon del" onclick="window._goals.deleteGoal(${g.id})" title="Excluir">🗑️</button>
@@ -226,6 +280,16 @@ export async function openGoalModal(id = null) {
   el('goalTipo').innerHTML = TIPOS.map(t =>
     `<option value="${t.key}">${t.label}</option>`).join('');
 
+  // Preenche select de fontes
+  el('goalFonte').innerHTML = FONTES.map(f =>
+    `<option value="${f.key}">${f.label}</option>`).join('');
+
+  // Preenche select de hábitos (para fonte=habito)
+  const habits = (await db.getAll('habits')).filter(h => h.status === 'ativo');
+  el('goalHabit').innerHTML = habits.length
+    ? habits.map(h => `<option value="${h.id}">${h.icone} ${h.nome}</option>`).join('')
+    : '<option value="">Nenhum hábito ativo — crie um na Produtividade</option>';
+
   if (id) {
     const g = (await getGoals()).find(x => x.id === id);
     if (!g) return;
@@ -233,6 +297,8 @@ export async function openGoalModal(id = null) {
     el('goalDescricao').value = g.descricao ?? '';
     el('goalModulo').value    = g.modulo;
     el('goalTipo').value      = g.tipo;
+    el('goalFonte').value     = g.fonte ?? 'manual';
+    if (g.habit_id) el('goalHabit').value = g.habit_id;
     el('goalMeta').value      = g.meta;
     el('goalAtual').value     = g.atual;
     el('goalUnidade').value   = g.unidade;
@@ -240,12 +306,30 @@ export async function openGoalModal(id = null) {
     el('goalStatus').value    = g.status;
   } else {
     el('goalForm').reset();
+    el('goalFonte').value  = 'manual';
     el('goalStatus').value = 'ativa';
     el('goalPrazo').value  = offsetDate(90);
     _syncUnidade();
   }
 
+  _syncFonte();
   el('modalGoal').classList.add('open');
+}
+
+/* Ajusta a UI do modal conforme a fonte escolhida */
+function _syncFonte() {
+  const fonte = el('goalFonte').value;
+  const info  = FONTES.find(f => f.key === fonte);
+  const auto  = isAuto(fonte);
+
+  el('goalFonteHint').textContent = info?.hint ?? '';
+  el('goalHabitRow').style.display = fonte === 'habito' ? '' : 'none';
+
+  // Metas automáticas calculam o "atual" sozinhas → esconde o campo manual
+  el('goalAtualWrap').style.display = auto ? 'none' : '';
+
+  // Sugere a unidade da fonte
+  if (auto && info?.unidade) el('goalUnidade').value = info.unidade;
 }
 
 function closeGoalModal() { el('modalGoal').classList.remove('open'); }
@@ -262,8 +346,10 @@ async function saveGoal() {
   const titulo   = el('goalTitulo').value.trim();
   const modulo   = el('goalModulo').value;
   const tipo     = el('goalTipo').value;
+  const fonte    = el('goalFonte').value || 'manual';
+  const habit_id = fonte === 'habito' ? (parseInt(el('goalHabit').value) || null) : null;
   const meta     = parseFloat(el('goalMeta').value);
-  const atual    = parseFloat(el('goalAtual').value) || 0;
+  const atual    = isAuto(fonte) ? 0 : (parseFloat(el('goalAtual').value) || 0);
   const unidade  = el('goalUnidade').value.trim() || 'unid.';
   const prazo    = el('goalPrazo').value || null;
   const status   = el('goalStatus').value;
@@ -274,14 +360,19 @@ async function saveGoal() {
     toast('Preencha título, módulo, tipo e meta.', 'error');
     return;
   }
+  if (fonte === 'habito' && !habit_id) {
+    toast('Selecione o hábito a vincular (ou crie um na Produtividade).', 'error');
+    return;
+  }
 
   const cor = MOD_COLORS[modulo] ?? '#3b82f6';
 
   if (editId) {
-    await db.put('goals', { id: parseInt(editId), titulo, descricao, modulo, tipo, meta, atual, unidade, prazo, status, cor, criadaEm: today() });
+    const old = (await getGoals()).find(x => x.id === parseInt(editId)) ?? {};
+    await db.put('goals', { ...old, id: parseInt(editId), titulo, descricao, modulo, tipo, fonte, habit_id, meta, atual, unidade, prazo, status, cor });
     toast('Meta atualizada!', 'success');
   } else {
-    await db.insert('goals', { titulo, descricao, modulo, tipo, meta, atual, unidade, prazo, status, cor, criadaEm: today() });
+    await db.insert('goals', { titulo, descricao, modulo, tipo, fonte, habit_id, meta, atual, unidade, prazo, status, cor, criadaEm: today() });
     toast('Meta criada! 🎯', 'success');
   }
 
@@ -343,7 +434,8 @@ async function saveProgress() {
    DELETE
    ═══════════════════════════════════════════ */
 export async function deleteGoal(id) {
-  
+  const g = (await getGoals()).find(x => x.id === id);
+  if (!await uiConfirm(`Excluir a meta "${g?.titulo}"?`, { title: 'Excluir meta' })) return;
   await db.delete('goals', id);
   invalidate();
   store.emit(EVENTS.GOAL_CHANGED);
@@ -368,6 +460,14 @@ export function init() {
 
   /* Sync unidade ao trocar tipo */
   el('goalTipo').addEventListener('change', _syncUnidade);
+
+  /* Sync UI ao trocar a fonte de progresso */
+  el('goalFonte').addEventListener('change', _syncFonte);
+
+  /* Metas automáticas se atualizam quando dados de outras áreas mudam */
+  store.on(EVENTS.TRANSACTION_CHANGED, () => {
+    if (router.current === 'metas') renderMetas();
+  });
 
   /* Modal progresso */
   el('progClose').addEventListener('click', closeProgressModal);

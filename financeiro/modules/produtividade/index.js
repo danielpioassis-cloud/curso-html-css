@@ -12,7 +12,7 @@
 
 import { db }            from '../../core/db.js';
 import { store, EVENTS } from '../../core/store.js';
-import { today, fmtDate, toast } from '../../core/ui.js';
+import { today, fmtDate, toast, uiConfirm } from '../../core/ui.js';
 
 /* ── Cache ── */
 let _projects = null, _tasks = null, _habits = null, _logs = null;
@@ -304,7 +304,7 @@ async function _renderHabitos() {
     const pct        = h.meta_dias > 0
       ? Math.min(100, Math.round((logs.filter(l=>l.habit_id===h.id).length / h.meta_dias)*100))
       : 0;
-    const dots = last7.map(day => `<div class="habit-dot ${day.done?'habit-dot--on':''}" title="${day.date}"></div>`).join('');
+    const dots = last7.map(day => `<button class="habit-dot ${day.done?'habit-dot--on':''}" title="${fmtDate(day.date)} — clique para marcar/desmarcar" onclick="window._prod.toggleHabitDate(${h.id},'${day.date}')"></button>`).join('');
     return `
       <div class="habit-card ${todayDone ? 'habit-card--done' : ''}">
         <div class="habit-card__top">
@@ -418,7 +418,8 @@ async function saveTask() {
 
 export async function editTask(id)   { await openTaskModal(id); }
 export async function deleteTask(id) {
-  
+  const t = (await getTasks()).find(x => x.id === id);
+  if (!await uiConfirm(`Excluir a tarefa "${t?.titulo}"?`, { title: 'Excluir tarefa' })) return;
   await db.delete('tasks', id);
   invalidate();
   toast('Tarefa removida.', 'info');
@@ -471,7 +472,8 @@ async function saveProject() {
 
 export async function editProject(id)   { await openProjectModal(id); }
 export async function deleteProject(id) {
-  
+  const p = (await getProjects()).find(x => x.id === id);
+  if (!await uiConfirm(`Excluir o projeto "${p?.nome}"? As tarefas ficarão sem projeto.`, { title: 'Excluir projeto' })) return;
   // Desvincula tarefas
   for (const t of (await getTasks()).filter(t => t.project_id === id)) {
     await db.put('tasks', { ...t, project_id: null });
@@ -493,20 +495,28 @@ export async function filterByProject(id) {
    ACTIONS — HÁBITOS
    ════════════════════════════════════════ */
 export async function toggleHabitToday(id) {
-  const logs = await getLogs();
-  const t    = today();
-  const existing = logs.find(l => l.habit_id === id && l.data === t);
+  await toggleHabitDate(id, today());
+}
+
+export async function toggleHabitDate(id, date) {
+  const logs     = await getLogs();
+  const existing = logs.find(l => l.habit_id === id && l.data === date);
   if (existing) {
     await db.delete('habit_logs', existing.id);
     toast('Check-in removido.', 'info');
   } else {
-    await db.insert('habit_logs', { habit_id: id, data: t });
+    await db.insert('habit_logs', { habit_id: id, data: date });
     const h = (await getHabits()).find(x => x.id === id);
-    const streak = _streak(id, await db.getAll('habit_logs'));
-    if (streak > 1) toast(`🔥 ${streak} dias seguidos! "${h?.nome}"`, 'success');
-    else toast('Hábito marcado! ✅', 'success');
+    if (date === today()) {
+      const streak = _streak(id, await db.getAll('habit_logs'));
+      if (streak > 1) toast(`🔥 ${streak} dias seguidos! "${h?.nome}"`, 'success');
+      else toast('Hábito marcado! ✅', 'success');
+    } else {
+      toast(`✅ "${h?.nome}" marcado em ${fmtDate(date)}`, 'success');
+    }
   }
   invalidate();
+  store.emit(EVENTS.GOAL_CHANGED);   // metas vinculadas a hábitos se atualizam
   await _renderHabitos();
 }
 
@@ -560,7 +570,8 @@ async function saveHabit() {
 
 export async function editHabit(id)   { await openHabitModal(id); }
 export async function deleteHabit(id) {
-  
+  const h = (await getHabits()).find(x => x.id === id);
+  if (!await uiConfirm(`Excluir o hábito "${h?.nome}" e todos os check-ins?`, { title: 'Excluir hábito' })) return;
   for (const l of (await getLogs()).filter(l => l.habit_id === id)) await db.delete('habit_logs', l.id);
   await db.delete('habits', id);
   invalidate();
@@ -572,7 +583,7 @@ export async function deleteHabit(id) {
    INIT
    ════════════════════════════════════════ */
 export function init() {
-  window._prod = { moveTask, editTask, deleteTask, editProject, deleteProject, filterByProject, editHabit, deleteHabit, toggleHabitToday, openHabitModal, openProjectModal };
+  window._prod = { moveTask, editTask, deleteTask, editProject, deleteProject, filterByProject, editHabit, deleteHabit, toggleHabitToday, toggleHabitDate, openHabitModal, openProjectModal };
 
   // Sub-tabs
   document.querySelectorAll('.prod-tab').forEach(btn =>
