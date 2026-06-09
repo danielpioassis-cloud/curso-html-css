@@ -1,0 +1,1885 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LifeControl — Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;1,14..32,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<!-- ═══ SIDEBAR ═══ -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar__brand">
+    <div class="sidebar__logo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <span class="sidebar__name">LifeControl</span>
+  </div>
+
+  <nav class="sidebar__nav">
+
+    <!-- ── Finanças Pessoais ── -->
+    <div class="nav-group open" id="navg-financas">
+      <button class="nav-group__hd" onclick="window._toggleNavGroup('financas')">
+        <span class="nav-group__emoji">💰</span>
+        <span class="nav-group__label">Finanças Pessoais</span>
+        <svg class="nav-group__chevron" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="nav-group__body" id="navgb-financas">
+        <a href="#/dashboard" class="nav-item active" data-page="dashboard">
+          <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.8"/></svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="#/visao-geral" class="nav-item" data-page="visao-geral">
+          <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M16 2v4M8 2v4M3 10h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span>Visão Geral</span>
+        </a>
+        <a href="#/transacoes" class="nav-item" data-page="transacoes">
+          <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M2 10h20" stroke="currentColor" stroke-width="1.8"/></svg>
+          <span>Transações</span>
+        </a>
+        <a href="#/orcamento" class="nav-item" data-page="orcamento">
+          <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span>Orçamento</span>
+        </a>
+        <a href="#/relatorios" class="nav-item" data-page="relatorios">
+          <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none"><path d="M3 3v18h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M7 16l4-5 4 3 4-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Relatórios</span>
+        </a>
+        <a href="#/contas" class="nav-item" data-page="contas">
+          <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 2v6h6M9 13h6M9 17h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span>Contas</span>
+        </a>
+        <a href="#/investimentos" class="nav-item" data-page="investimentos">
+          <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none"><path d="M3 17l4-4 4 4 4-5 4 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 7h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span>Investimentos</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ── Metas ── -->
+    <div class="nav-group" id="navg-metas">
+      <button class="nav-group__hd" onclick="window._toggleNavGroup('metas')">
+        <span class="nav-group__emoji">🎯</span>
+        <span class="nav-group__label">Metas</span>
+        <svg class="nav-group__chevron" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="nav-group__body" id="navgb-metas">
+        <a href="#/metas" class="nav-item" data-page="metas">
+          <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="6" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg>
+          <span>Objetivos</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ── Negócios ── -->
+    <div class="nav-group" id="navg-negocios">
+      <button class="nav-group__hd" onclick="window._toggleNavGroup('negocios')">
+        <span class="nav-group__emoji">💼</span>
+        <span class="nav-group__label">Negócios</span>
+        <svg class="nav-group__chevron" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="nav-group__body" id="navgb-negocios">
+        <a href="#/negocios" class="nav-item" data-page="negocios">
+          <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none"><rect x="2" y="7" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" stroke="currentColor" stroke-width="1.8"/></svg>
+          <span>Painel</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ── Produtividade ── -->
+    <div class="nav-group" id="navg-prod">
+      <button class="nav-group__hd" onclick="window._toggleNavGroup('prod')">
+        <span class="nav-group__emoji">⚡</span>
+        <span class="nav-group__label">Produtividade</span>
+        <svg class="nav-group__chevron" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="nav-group__body" id="navgb-prod">
+        <a href="#/produtividade" class="nav-item" data-page="produtividade">
+          <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke="currentColor" stroke-width="1.8"/></svg>
+          <span>Painel</span>
+        </a>
+      </div>
+    </div>
+
+  </nav>
+
+  <div class="sidebar__footer">
+    <div class="user-card">
+      <div class="user-card__avatar">D</div>
+      <div class="user-card__info">
+        <span class="user-card__name">Daniel</span>
+        <span class="user-card__role">Administrador</span>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- ═══ WRAPPER ═══ -->
+<div class="main-wrapper" id="mainWrapper">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <button class="topbar__toggle" id="sidebarToggle" aria-label="Menu">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <div class="topbar__center">
+      <h1 class="topbar__title" id="pageTitle">Dashboard</h1>
+    </div>
+    <div class="topbar__right">
+      <span class="topbar__date" id="currentDate"></span>
+
+      <!-- Ações: Finanças Pessoais -->
+      <div id="topbar-fin-actions" style="display:flex;gap:.5rem">
+        <button class="btn btn--ghost btn--sm" id="btnImport">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Importar CSV
+        </button>
+        <button class="btn btn--primary btn--sm" id="btnAddTransaction">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Nova Transação
+        </button>
+      </div>
+
+      <!-- Ações: Negócios (visíveis só na página negócios) -->
+      <div id="topbar-biz-actions" style="display:none;gap:.5rem">
+        <button class="btn btn--ghost btn--sm" id="btnBizImport">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Importar CSV
+        </button>
+        <button class="btn btn--primary btn--sm" id="btnBizAddTxn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Nova Transação
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- PAGES -->
+  <main class="content">
+
+    <!-- ── DASHBOARD ── -->
+    <section class="page active" id="page-dashboard">
+      <div class="kpi-grid">
+        <div class="kpi-card kpi-card--green">
+          <div class="kpi-card__left">
+            <span class="kpi-card__label">Receitas do Mês</span>
+            <span class="kpi-card__value" id="kpi-receitas">R$ 0,00</span>
+            <span class="kpi-card__delta" id="delta-receitas"></span>
+          </div>
+          <div class="kpi-card__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="kpi-card kpi-card--red">
+          <div class="kpi-card__left">
+            <span class="kpi-card__label">Despesas do Mês</span>
+            <span class="kpi-card__value" id="kpi-despesas">R$ 0,00</span>
+            <span class="kpi-card__delta" id="delta-despesas"></span>
+          </div>
+          <div class="kpi-card__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M19 12l-7 7-7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="kpi-card kpi-card--blue">
+          <div class="kpi-card__left">
+            <span class="kpi-card__label">Saldo Atual</span>
+            <span class="kpi-card__value" id="kpi-saldo">R$ 0,00</span>
+            <span class="kpi-card__delta" id="delta-saldo"></span>
+          </div>
+          <div class="kpi-card__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z" stroke="currentColor" stroke-width="2"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="kpi-card kpi-card--purple">
+          <div class="kpi-card__left">
+            <span class="kpi-card__label">Economias</span>
+            <span class="kpi-card__value" id="kpi-economia">R$ 0,00</span>
+            <span class="kpi-card__delta" id="delta-economia"></span>
+          </div>
+          <div class="kpi-card__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" stroke="currentColor" stroke-width="2"/></svg></div>
+        </div>
+      </div>
+
+      <div class="charts-row">
+        <div class="card card--large">
+          <div class="card__header">
+            <div>
+              <h3 class="card__title">Fluxo de Caixa</h3>
+              <p class="card__subtitle">Receitas vs despesas mensais</p>
+            </div>
+            <select class="select" id="chartPeriod">
+              <option value="6">6 meses</option>
+              <option value="12">12 meses</option>
+            </select>
+          </div>
+          <div class="card__body"><canvas id="chartFluxo"></canvas></div>
+        </div>
+        <div class="card card--small">
+          <div class="card__header">
+            <div>
+              <h3 class="card__title">Por Categoria</h3>
+              <p class="card__subtitle">Despesas do mês</p>
+            </div>
+          </div>
+          <div class="card__body"><canvas id="chartCategoria"></canvas></div>
+        </div>
+      </div>
+
+      <div class="bottom-row">
+        <div class="card">
+          <div class="card__header">
+            <div>
+              <h3 class="card__title">Últimas Transações</h3>
+              <p class="card__subtitle">5 mais recentes</p>
+            </div>
+            <a href="#" class="link" data-page="transacoes">Ver todas →</a>
+          </div>
+          <div class="card__body p0">
+            <table class="table" id="dashTable">
+              <thead><tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Valor</th></tr></thead>
+              <tbody id="dashTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card__header">
+            <div>
+              <h3 class="card__title">Metas do Mês</h3>
+              <p class="card__subtitle">Progresso do orçamento</p>
+            </div>
+            <a href="#" class="link" data-page="orcamento">Editar →</a>
+          </div>
+          <div class="card__body" id="metasContainer"></div>
+        </div>
+      </div>
+
+      <!-- ── PREVISIBILIDADE ── -->
+      <div class="card prev-card">
+        <div class="card__header">
+          <div>
+            <h3 class="card__title">🔮 Previsibilidade do Mês</h3>
+            <p class="card__subtitle">Renda prevista − contas fixas = sobra estimada</p>
+          </div>
+          <a href="#" class="link" data-page="contas">Gerenciar contas →</a>
+        </div>
+        <div class="card__body">
+          <div class="prev-grid">
+            <!-- Entrada de renda -->
+            <div class="prev-input-block">
+              <label class="form-label">Quanto espero ganhar este mês?</label>
+              <div class="prev-input-wrap">
+                <span class="prev-input-prefix">R$</span>
+                <input type="number" class="input prev-input" id="prevRendaInput" placeholder="0,00" step="0.01" min="0" />
+              </div>
+              <p class="prev-input-hint">Salário, freelances, pró-labore… o que você projeta receber.</p>
+            </div>
+
+            <!-- Breakdown -->
+            <div class="prev-breakdown">
+              <div class="prev-line">
+                <span class="prev-line__label">📋 Contas fixas (total)</span>
+                <span class="prev-line__val val-red" id="prev-fixos">R$ 0,00</span>
+              </div>
+              <div class="prev-line">
+                <span class="prev-line__label">⏳ Ainda a pagar</span>
+                <span class="prev-line__val" id="prev-apagar">R$ 0,00</span>
+              </div>
+              <div class="prev-line">
+                <span class="prev-line__label">🛒 Gastos variáveis (mês)</span>
+                <span class="prev-line__val" id="prev-variaveis">R$ 0,00</span>
+              </div>
+              <div class="prev-result">
+                <span class="prev-result__label">Sobra prevista</span>
+                <span class="prev-result__value val-green" id="prev-sobra">R$ 0,00</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Barra de comprometimento -->
+          <div class="prev-bar-block">
+            <div class="prev-bar">
+              <div class="prev-bar__fill" id="prev-bar-fixos" style="width:0%"></div>
+            </div>
+            <span class="prev-bar__label" id="prev-pct-label">Informe sua renda prevista para calcular</span>
+          </div>
+          <p class="prev-msg" id="prev-msg"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── VISÃO GERAL ── -->
+    <section class="page" id="page-visao-geral">
+      <div class="period-bar">
+        <div class="period-pills">
+          <button class="pill active" data-period="mes">Este Mês</button>
+          <button class="pill" data-period="trimestre">3 Meses</button>
+          <button class="pill" data-period="semestre">6 Meses</button>
+          <button class="pill" data-period="ano">Este Ano</button>
+          <button class="pill" data-period="custom">Personalizado</button>
+        </div>
+        <div class="period-custom" id="periodCustom" style="display:none">
+          <input type="date" class="input input--sm" id="customFrom" />
+          <span class="period-sep">até</span>
+          <input type="date" class="input input--sm" id="customTo" />
+          <button class="btn btn--primary btn--sm" id="btnApplyCustom">Aplicar</button>
+        </div>
+      </div>
+
+      <div class="kpi-grid" id="vgKpiGrid">
+        <div class="kpi-card kpi-card--green"><div class="kpi-card__left"><span class="kpi-card__label">Total Receitas</span><span class="kpi-card__value" id="vg-receitas">—</span></div><div class="kpi-card__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="kpi-card kpi-card--red"><div class="kpi-card__left"><span class="kpi-card__label">Total Despesas</span><span class="kpi-card__value" id="vg-despesas">—</span></div><div class="kpi-card__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M19 12l-7 7-7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="kpi-card kpi-card--blue"><div class="kpi-card__left"><span class="kpi-card__label">Saldo do Período</span><span class="kpi-card__value" id="vg-saldo">—</span></div><div class="kpi-card__icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 8v4l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div></div>
+        <div class="kpi-card kpi-card--amber"><div class="kpi-card__left"><span class="kpi-card__label">Transações</span><span class="kpi-card__value" id="vg-count">—</span></div><div class="kpi-card__icon"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" stroke-width="2"/><path d="M2 10h20" stroke="currentColor" stroke-width="2"/></svg></div></div>
+      </div>
+
+      <div class="charts-row">
+        <div class="card card--large">
+          <div class="card__header">
+            <div><h3 class="card__title">Evolução Mensal</h3><p class="card__subtitle" id="vgPeriodLabel">—</p></div>
+          </div>
+          <div class="card__body"><canvas id="chartVgBar"></canvas></div>
+        </div>
+        <div class="card card--small">
+          <div class="card__header"><div><h3 class="card__title">Gastos por Categoria</h3><p class="card__subtitle">Período selecionado</p></div></div>
+          <div class="card__body"><canvas id="chartVgPie"></canvas></div>
+        </div>
+      </div>
+
+      <div class="bottom-row">
+        <div class="card">
+          <div class="card__header"><div><h3 class="card__title">Maiores Despesas</h3><p class="card__subtitle">Top 10 do período</p></div></div>
+          <div class="card__body p0">
+            <table class="table"><thead><tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Valor</th></tr></thead><tbody id="vgTopTable"></tbody></table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card__header"><div><h3 class="card__title">Resumo por Categoria</h3><p class="card__subtitle">Período selecionado</p></div></div>
+          <div class="card__body p0">
+            <table class="table"><thead><tr><th>Categoria</th><th>Despesas</th><th>%</th></tr></thead><tbody id="vgCatTable"></tbody></table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── TRANSAÇÕES ── -->
+    <section class="page" id="page-transacoes">
+      <div class="page-toolbar">
+        <div class="page-toolbar__filters">
+          <div class="search-box">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/><path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <input type="text" class="input" id="searchInput" placeholder="Buscar..." />
+          </div>
+          <select class="select" id="filterTipo"><option value="">Todos os tipos</option><option value="receita">Receitas</option><option value="despesa">Despesas</option></select>
+          <select class="select" id="filterCategoria"><option value="">Todas as categorias</option></select>
+        </div>
+        <button class="btn btn--danger btn--sm" id="btnDeleteAllTxns" title="Excluir todas as transações pessoais">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Excluir tudo
+        </button>
+      </div>
+      <div class="card">
+        <div class="card__body p0">
+          <table class="table table--hover" id="transTable">
+            <thead><tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Tipo</th><th>Valor</th><th>Ações</th></tr></thead>
+            <tbody id="transTableBody"></tbody>
+          </table>
+          <div class="empty-state" id="transEmpty" style="display:none">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <p>Nenhuma transação encontrada</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── ORÇAMENTO ── -->
+    <section class="page" id="page-orcamento">
+      <div class="page-toolbar">
+        <div></div>
+        <button class="btn btn--primary btn--sm" id="btnAddOrcamento">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Nova Meta
+        </button>
+      </div>
+      <div class="orcamento-grid" id="orcamentoGrid"></div>
+    </section>
+
+    <!-- ── RELATÓRIOS ── -->
+    <section class="page" id="page-relatorios">
+      <div class="page-toolbar">
+        <select class="select" id="relPeriodo"><option value="mes">Este mês</option><option value="trimestre">Trimestre</option><option value="ano">Este ano</option></select>
+      </div>
+      <div class="charts-row">
+        <div class="card card--large">
+          <div class="card__header"><div><h3 class="card__title">Receitas vs Despesas</h3><p class="card__subtitle">Evolução nos últimos 6 meses</p></div></div>
+          <div class="card__body"><canvas id="chartRelatorio"></canvas></div>
+        </div>
+        <div class="card card--small">
+          <div class="card__header"><div><h3 class="card__title">Distribuição</h3><p class="card__subtitle">Gastos do mês atual</p></div></div>
+          <div class="card__body"><canvas id="chartRelPie"></canvas></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:1.25rem">
+        <div class="card__header"><div><h3 class="card__title">Resumo por Categoria</h3><p class="card__subtitle">Histórico completo</p></div></div>
+        <div class="card__body p0">
+          <table class="table table--hover">
+            <thead><tr><th>Categoria</th><th>Total Receitas</th><th>Total Despesas</th><th>Saldo</th></tr></thead>
+            <tbody id="relTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CONTAS ── -->
+    <section class="page" id="page-contas">
+      <!-- KPIs -->
+      <div class="kpi-grid" style="margin-bottom:1rem">
+        <div class="kpi-card kpi-card--red">
+          <div class="kpi-card__left">
+            <span class="kpi-card__label">Total do Mês</span>
+            <span class="kpi-card__value" id="conta-kpi-total">R$ 0,00</span>
+          </div>
+          <div class="kpi-card__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="2"/><path d="M14 2v6h6" stroke="currentColor" stroke-width="2"/></svg></div>
+        </div>
+        <div class="kpi-card kpi-card--green">
+          <div class="kpi-card__left">
+            <span class="kpi-card__label">Já Pago</span>
+            <span class="kpi-card__value" id="conta-kpi-pago">R$ 0,00</span>
+          </div>
+          <div class="kpi-card__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="currentColor" stroke-width="2"/><path d="M22 4L12 14.01l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="kpi-card kpi-card--amber">
+          <div class="kpi-card__left">
+            <span class="kpi-card__label">Ainda Devendo</span>
+            <span class="kpi-card__value" id="conta-kpi-falta">R$ 0,00</span>
+          </div>
+          <div class="kpi-card__icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="kpi-card kpi-card--purple">
+          <div class="kpi-card__left">
+            <span class="kpi-card__label">Contas Atrasadas</span>
+            <span class="kpi-card__value" id="conta-kpi-atrasadas">0</span>
+          </div>
+          <div class="kpi-card__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" stroke-width="2"/><path d="M12 9v4M12 17h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+        </div>
+      </div>
+
+      <!-- Progresso geral -->
+      <div class="card" style="margin-bottom:1rem">
+        <div class="card__body" style="display:flex;align-items:center;gap:1rem">
+          <div style="flex:1">
+            <div class="progress" style="height:10px">
+              <div class="progress__fill safe" id="conta-progress-bar" style="width:0%"></div>
+            </div>
+          </div>
+          <span id="conta-progress-label" style="font-size:.82rem;color:var(--text2);white-space:nowrap;font-weight:600">0% quitado</span>
+        </div>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="page-toolbar" style="margin-bottom:.75rem">
+        <div class="conta-filters">
+          <button class="conta-filter active" data-status="">Todas</button>
+          <button class="conta-filter" data-status="pendente">🕒 Pendentes</button>
+          <button class="conta-filter" data-status="atrasada">⚠️ Atrasadas</button>
+          <button class="conta-filter" data-status="paga">✅ Pagas</button>
+        </div>
+        <button class="btn btn--primary btn--sm" id="btnAddConta">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Nova Conta
+        </button>
+      </div>
+
+      <!-- Tabela -->
+      <div class="card card--p0">
+        <table class="table table--hover">
+          <thead>
+            <tr>
+              <th>Conta</th>
+              <th>Quem (credor)</th>
+              <th>Categoria</th>
+              <th>Vencimento</th>
+              <th>Valor</th>
+              <th>Pago</th>
+              <th>Falta</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="contasTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ── METAS ── -->
+    <section class="page" id="page-metas">
+      <div class="page-toolbar">
+        <div class="page-toolbar__filters">
+          <select class="select" id="goalFilterMod">
+            <option value="">Todos os módulos</option>
+            <option value="financeiro">💰 Financeiro</option>
+            <option value="estudos">📚 Estudos</option>
+            <option value="treino">🏋️ Treino</option>
+            <option value="saude">🩺 Saúde</option>
+            <option value="produtividade">⚡ Produtividade</option>
+            <option value="negocios">💼 Negócios</option>
+          </select>
+          <select class="select" id="goalFilterStatus">
+            <option value="">Todos os status</option>
+            <option value="ativa">Ativas</option>
+            <option value="concluida">Concluídas</option>
+            <option value="pausada">Pausadas</option>
+          </select>
+        </div>
+        <button class="btn btn--primary btn--sm" id="btnAddGoal">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Nova Meta
+        </button>
+      </div>
+
+      <!-- KPIs de metas -->
+      <div class="kpi-grid" style="margin-bottom:1.25rem">
+        <div class="kpi-card kpi-card--blue">
+          <div class="kpi-card__left">
+            <span class="kpi-card__label">Metas Ativas</span>
+            <span class="kpi-card__value" id="goal-kpi-ativas">—</span>
+          </div>
+          <div class="kpi-card__icon">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="6" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg>
+          </div>
+        </div>
+        <div class="kpi-card kpi-card--green">
+          <div class="kpi-card__left">
+            <span class="kpi-card__label">Concluídas</span>
+            <span class="kpi-card__value" id="goal-kpi-concl">—</span>
+          </div>
+          <div class="kpi-card__icon">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+        <div class="kpi-card kpi-card--purple">
+          <div class="kpi-card__left">
+            <span class="kpi-card__label">Progresso Médio</span>
+            <span class="kpi-card__value" id="goal-kpi-avg">—</span>
+          </div>
+          <div class="kpi-card__icon">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M3 3v18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M7 16l4-5 4 3 4-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+        <div class="kpi-card kpi-card--green" id="goal-kpi-alert-card">
+          <div class="kpi-card__left">
+            <span class="kpi-card__label">Vencendo em breve</span>
+            <span class="kpi-card__value" id="goal-kpi-alert">—</span>
+          </div>
+          <div class="kpi-card__icon">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" stroke-width="2"/><path d="M12 9v4M12 17h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cards grid -->
+      <div class="goals-grid" id="goalsGrid"></div>
+    </section>
+
+    <!-- ── NEGÓCIOS ── -->
+    <section class="page" id="page-negocios">
+      <!-- Sub-tabs -->
+      <div class="sub-tabs">
+        <button class="biz-tab active" data-tab="overview">📊 Visão Geral</button>
+        <button class="biz-tab" data-tab="empresas">🏢 Empresas</button>
+        <button class="biz-tab" data-tab="clientes">👥 Clientes</button>
+        <button class="biz-tab" data-tab="produtos">📦 Produtos/Serviços</button>
+        <button class="biz-tab" data-tab="prolabore">💸 Pró Labore</button>
+        <button class="biz-tab" data-tab="financeiro">💳 Lançamentos</button>
+      </div>
+
+      <!-- KPIs negócios -->
+      <div class="kpi-grid" style="margin:.75rem 0 1rem">
+        <div class="kpi-card kpi-card--blue"><div class="kpi-card__left"><span class="kpi-card__label">Empresas</span><span class="kpi-card__value" id="biz-kpi-empresas">—</span></div><div class="kpi-card__icon"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="7" width="20" height="14" rx="2" stroke="currentColor" stroke-width="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" stroke="currentColor" stroke-width="2"/></svg></div></div>
+        <div class="kpi-card kpi-card--green"><div class="kpi-card__left"><span class="kpi-card__label">Receita Total</span><span class="kpi-card__value" id="biz-kpi-receita">—</span></div><div class="kpi-card__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div></div>
+        <div class="kpi-card kpi-card--red"><div class="kpi-card__left"><span class="kpi-card__label">Despesa Total</span><span class="kpi-card__value" id="biz-kpi-despesa">—</span></div><div class="kpi-card__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M19 12l-7 7-7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div></div>
+        <div class="kpi-card kpi-card--purple"><div class="kpi-card__left"><span class="kpi-card__label">Lucro Líquido</span><span class="kpi-card__value" id="biz-kpi-lucro">—</span></div><div class="kpi-card__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z" stroke="currentColor" stroke-width="2"/><path d="M8 12h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div></div>
+      </div>
+
+      <!-- Painel: visão geral -->
+      <div id="biz-panel-overview">
+        <div class="goals-grid" id="bizDreGrid"></div>
+      </div>
+
+      <!-- Painel: empresas -->
+      <div id="biz-panel-empresas" style="display:none">
+        <div class="page-toolbar" style="margin-bottom:.75rem">
+          <div></div>
+          <button class="btn btn--primary btn--sm" id="btnAddBiz">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            Nova Empresa
+          </button>
+        </div>
+        <div class="card"><div class="card__body p0">
+          <table class="table table--hover">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Descrição</th><th>Ações</th></tr></thead>
+            <tbody id="bizEmpresasList"></tbody>
+          </table>
+        </div></div>
+      </div>
+
+      <!-- Painel: clientes — SQL view -->
+      <div id="biz-panel-clientes" style="display:none">
+
+        <!-- Query bar -->
+        <div class="sql-bar">
+          <span class="sql-kw">SELECT</span> <span class="sql-col">*</span>
+          <span class="sql-kw">FROM</span> <span class="sql-tbl">clientes</span>
+          <span class="sql-kw">WHERE</span>
+          <input type="text" class="input sql-input" id="sqlClientQuery" placeholder="nome, email ou telefone…" />
+          <span class="sql-kw">AND empresa =</span>
+          <select class="select sql-select" id="bizClientFilter"><option value="">ANY</option></select>
+          <span class="sql-kw">ORDER BY</span>
+          <select class="select sql-select" id="sqlClientSort">
+            <option value="nome">nome ASC</option>
+            <option value="email">email ASC</option>
+            <option value="empresa">empresa ASC</option>
+          </select>
+        </div>
+
+        <!-- Result bar -->
+        <div class="sql-result-bar">
+          <span class="sql-result-count" id="sqlClientCount">— rows returned</span>
+          <div style="display:flex;gap:.5rem">
+            <button class="btn btn--ghost btn--sm" id="btnExportClientCSV">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Export CSV
+            </button>
+            <button class="btn btn--primary btn--sm" id="btnAddClient">+ Novo Cliente</button>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="card card--p0">
+          <table class="table table--hover">
+            <thead>
+              <tr>
+                <th class="sql-th sortable" data-col="nome">nome <span class="sort-arrow">↕</span></th>
+                <th class="sql-th sortable" data-col="email">email</th>
+                <th class="sql-th sortable" data-col="tel">telefone</th>
+                <th class="sql-th sortable" data-col="empresa">empresa</th>
+                <th class="sql-th">obs</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="bizClientesList"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Painel: produtos -->
+      <div id="biz-panel-produtos" style="display:none">
+        <div class="page-toolbar" style="margin-bottom:.75rem">
+          <select class="select" id="bizProdFilter"><option value="">Todas as empresas</option></select>
+          <button class="btn btn--primary btn--sm" id="btnAddProduct">+ Novo Produto/Serviço</button>
+        </div>
+        <div class="card"><div class="card__body p0">
+          <table class="table table--hover">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Preço</th><th>Empresa</th><th>Ações</th></tr></thead>
+            <tbody id="bizProdutosList"></tbody>
+          </table>
+        </div></div>
+      </div>
+
+      <!-- Painel: pró labore -->
+      <div id="biz-panel-prolabore" style="display:none">
+        <div id="bizProLaboreGrid"></div>
+      </div>
+
+      <!-- Painel: lançamentos financeiros -->
+      <div id="biz-panel-financeiro" style="display:none">
+
+        <!-- KPIs -->
+        <div class="kpi-grid" style="margin:.75rem 0 1rem">
+          <div class="kpi-card kpi-card--green">
+            <div class="kpi-card__left">
+              <span class="kpi-card__label">Receitas</span>
+              <span class="kpi-card__value" id="fin-kpi-rec">—</span>
+            </div>
+            <div class="kpi-card__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+          </div>
+          <div class="kpi-card kpi-card--red">
+            <div class="kpi-card__left">
+              <span class="kpi-card__label">Despesas</span>
+              <span class="kpi-card__value" id="fin-kpi-des">—</span>
+            </div>
+            <div class="kpi-card__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M19 12l-7 7-7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+          </div>
+          <div class="kpi-card kpi-card--blue">
+            <div class="kpi-card__left">
+              <span class="kpi-card__label">Saldo / Lucro</span>
+              <span class="kpi-card__value" id="fin-kpi-saldo">—</span>
+            </div>
+            <div class="kpi-card__icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+          </div>
+          <div class="kpi-card kpi-card--purple">
+            <div class="kpi-card__left">
+              <span class="kpi-card__label">Lançamentos</span>
+              <span class="kpi-card__value" id="fin-kpi-qtd">—</span>
+            </div>
+            <div class="kpi-card__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+          </div>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="fin-toolbar">
+          <div class="fin-toolbar__filters">
+            <select class="select" id="finFilterBiz"><option value="">Todas as empresas</option></select>
+            <select class="select" id="finFilterTipo">
+              <option value="">Tipo</option>
+              <option value="receita">Receita</option>
+              <option value="despesa">Despesa</option>
+            </select>
+            <select class="select" id="finFilterCat"><option value="">Categoria</option></select>
+            <input type="month" class="input fin-month" id="finFilterMes" title="Filtrar por mês" />
+            <div class="fin-search-wrap">
+              <svg class="fin-search-icon" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="1.8"/><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              <input type="text" class="input fin-search" id="finSearch" placeholder="Buscar descrição…" />
+            </div>
+          </div>
+          <div class="fin-toolbar__actions">
+            <button class="btn btn--danger btn--sm" id="btnDeleteAllBizTxns" title="Excluir todos os lançamentos desta empresa">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Excluir tudo
+            </button>
+            <button class="btn btn--green btn--sm" onclick="window._biz.openFinModal(null,'receita')">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+              Nova Venda
+            </button>
+            <button class="btn btn--red btn--sm" onclick="window._biz.openFinModal(null,'despesa')">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+              Nova Despesa
+            </button>
+            <button class="btn btn--primary btn--sm" onclick="window._biz.openFinModal()">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+              Lançamento
+            </button>
+          </div>
+        </div>
+
+        <!-- Chart compacto + tabela lado a lado -->
+        <div class="fin-layout">
+          <div class="fin-chart-card card">
+            <div class="card__title" style="margin-bottom:.75rem;font-size:.85rem">Receitas vs Despesas — últimos 6 meses</div>
+            <canvas id="chartFinNeg" height="220"></canvas>
+          </div>
+          <div class="fin-table-card">
+            <div class="card card--p0">
+              <table class="table table--hover">
+                <thead>
+                  <tr>
+                    <th>Data</th>
+                    <th>Descrição</th>
+                    <th>Categoria</th>
+                    <th>Empresa</th>
+                    <th>Tipo</th>
+                    <th>Valor</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="finTxnBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── PRODUTIVIDADE ── -->
+    <section class="page" id="page-produtividade">
+      <!-- Sub-tabs -->
+      <div class="sub-tabs">
+        <button class="prod-tab active" data-tab="tarefas">📋 Tarefas</button>
+        <button class="prod-tab" data-tab="projetos">📁 Projetos</button>
+        <button class="prod-tab" data-tab="habitos">🔥 Hábitos</button>
+      </div>
+
+      <!-- Painel: tarefas -->
+      <div id="prod-panel-tarefas">
+        <!-- KPIs -->
+        <div class="kpi-grid" style="margin:.75rem 0 1rem">
+          <div class="kpi-card kpi-card--blue"><div class="kpi-card__left"><span class="kpi-card__label">Total Tarefas</span><span class="kpi-card__value" id="task-kpi-total">—</span></div><div class="kpi-card__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke="currentColor" stroke-width="2"/></svg></div></div>
+          <div class="kpi-card kpi-card--amber"><div class="kpi-card__left"><span class="kpi-card__label">Em Andamento</span><span class="kpi-card__value" id="task-kpi-doing">—</span></div><div class="kpi-card__icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 8v4l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div></div>
+          <div class="kpi-card kpi-card--green"><div class="kpi-card__left"><span class="kpi-card__label">Concluídas</span><span class="kpi-card__value" id="task-kpi-done">—</span></div><div class="kpi-card__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="currentColor" stroke-width="2"/><path d="M22 4L12 14.01l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div></div>
+          <div class="kpi-card kpi-card--green"><div class="kpi-card__left"><span class="kpi-card__label">Atrasadas</span><span class="kpi-card__value" id="task-kpi-atrasadas">—</span></div><div class="kpi-card__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" stroke-width="2"/><path d="M12 9v4M12 17h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div></div>
+        </div>
+        <div class="page-toolbar" style="margin-bottom:.75rem">
+          <div class="page-toolbar__filters">
+            <select class="select" id="taskFilterProj"><option value="">Todos os projetos</option></select>
+            <select class="select" id="taskFilterPrio">
+              <option value="">Todas as prioridades</option>
+              <option value="alta">🔴 Alta</option>
+              <option value="media">🟡 Média</option>
+              <option value="baixa">🟢 Baixa</option>
+            </select>
+          </div>
+          <button class="btn btn--primary btn--sm" id="btnAddTask">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            Nova Tarefa
+          </button>
+        </div>
+        <div class="kanban-board" id="kanbanBoard"></div>
+      </div>
+
+      <!-- Painel: projetos -->
+      <div id="prod-panel-projetos" style="display:none">
+        <div class="page-toolbar" style="margin:.75rem 0">
+          <div></div>
+          <button class="btn btn--primary btn--sm" id="btnAddProject">+ Novo Projeto</button>
+        </div>
+        <div class="goals-grid" id="projetosGrid"></div>
+      </div>
+
+      <!-- Painel: hábitos -->
+      <!-- Painel: Pró Labore (negócios sub-tab rendered here in negocios page, not here) -->
+
+      <div id="prod-panel-habitos" style="display:none">
+        <div class="kpi-grid" style="margin:.75rem 0 1rem">
+          <div class="kpi-card kpi-card--blue"><div class="kpi-card__left"><span class="kpi-card__label">Hábitos Ativos</span><span class="kpi-card__value" id="habit-kpi-total">—</span></div><div class="kpi-card__icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div></div>
+          <div class="kpi-card kpi-card--green"><div class="kpi-card__left"><span class="kpi-card__label">Feitos Hoje</span><span class="kpi-card__value" id="habit-kpi-hoje">—</span></div><div class="kpi-card__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="currentColor" stroke-width="2"/><path d="M22 4L12 14.01l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div></div>
+          <div class="kpi-card kpi-card--amber"><div class="kpi-card__left"><span class="kpi-card__label">Streak Médio</span><span class="kpi-card__value" id="habit-kpi-streak">—</span></div><div class="kpi-card__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2c0 0-4 4-4 8a4 4 0 008 0c0-4-4-8-4-8z" stroke="currentColor" stroke-width="2"/></svg></div></div>
+        </div>
+        <div class="page-toolbar" style="margin-bottom:.75rem">
+          <div></div>
+          <button class="btn btn--primary btn--sm" id="btnAddHabit">+ Novo Hábito</button>
+        </div>
+        <div class="goals-grid" id="habitosGrid"></div>
+      </div>
+    </section>
+
+    <!-- ── INVESTIMENTOS ── -->
+    <section class="page" id="page-investimentos">
+      <!-- Sub-tabs -->
+      <div class="sub-tabs">
+        <button class="inv-tab active" data-tab="carteira">📊 Carteira</button>
+        <button class="inv-tab" data-tab="calculadora">🧮 Calculadora</button>
+      </div>
+
+      <!-- Painel: carteira -->
+      <div id="inv-panel-carteira">
+        <div class="kpi-grid" style="margin:.75rem 0 1rem">
+          <div class="kpi-card kpi-card--blue"><div class="kpi-card__left"><span class="kpi-card__label">Total Investido</span><span class="kpi-card__value" id="inv-kpi-invested">—</span></div></div>
+          <div class="kpi-card kpi-card--green"><div class="kpi-card__left"><span class="kpi-card__label">Valor Atual</span><span class="kpi-card__value" id="inv-kpi-atual">—</span></div></div>
+          <div class="kpi-card kpi-card--blue"><div class="kpi-card__left"><span class="kpi-card__label">Rendimento</span><span class="kpi-card__value" id="inv-kpi-rend">—</span></div></div>
+          <div class="kpi-card kpi-card--amber"><div class="kpi-card__left"><span class="kpi-card__label">Rentabilidade</span><span class="kpi-card__value" id="inv-kpi-pct">—</span></div></div>
+        </div>
+        <div class="page-toolbar" style="margin-bottom:.75rem">
+          <div class="page-toolbar__filters">
+            <select class="select" id="invFilterCat"><option value="">Todas as categorias</option></select>
+          </div>
+          <button class="btn btn--primary btn--sm" onclick="window._inv.openInvModal()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            Novo Ativo
+          </button>
+        </div>
+        <div class="inv-layout">
+          <div class="inv-chart-wrap">
+            <canvas id="chartInvDoughnut" height="260"></canvas>
+          </div>
+          <div class="inv-table-wrap">
+            <table class="table">
+              <thead><tr><th>Ativo</th><th>Categoria</th><th>Investido</th><th>Atual</th><th>Rend.</th><th>%</th><th></th></tr></thead>
+              <tbody id="invTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Painel: calculadora -->
+      <div id="inv-panel-calculadora" style="display:none">
+        <div class="calc-layout">
+          <div class="calc-form card">
+            <h3 class="card__title" style="margin-bottom:1rem">⚙️ Parâmetros</h3>
+            <div class="form-group">
+              <label class="form-label">Capital inicial (R$)</label>
+              <input type="number" class="input" id="calcPV" value="1000" min="0" step="any" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Aporte mensal (R$)</label>
+              <input type="number" class="input" id="calcPMT" value="500" min="0" step="any" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Taxa anual (%)</label>
+              <input type="number" class="input" id="calcRate" value="12" min="0" step="any" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Período (anos)</label>
+              <input type="number" class="input" id="calcPeriod" value="10" min="1" max="50" step="1" />
+            </div>
+            <button class="btn btn--primary" style="width:100%;margin-top:.5rem" onclick="window._inv._calcular()">Calcular</button>
+
+            <!-- Result summary -->
+            <div class="calc-result" id="calcResultBox" style="display:none">
+              <div class="calc-result__row"><span>Valor Final</span><strong id="calcResult-fv">—</strong></div>
+              <div class="calc-result__row"><span>Total Investido</span><strong id="calcResult-inv">—</strong></div>
+              <div class="calc-result__row"><span>Rendimento</span><strong id="calcResult-rend" style="color:var(--green)">—</strong></div>
+              <div class="calc-result__row"><span>Rentabilidade</span><strong id="calcResult-pct" style="color:var(--green)">—</strong></div>
+            </div>
+          </div>
+          <div class="calc-chart-area">
+            <div class="card" style="padding:1rem;margin-bottom:1rem">
+              <canvas id="chartCalc" height="220"></canvas>
+            </div>
+            <div class="card" style="padding:1rem">
+              <h4 style="margin:0 0 .75rem;font-size:.9rem;color:var(--text2)">Evolução anual</h4>
+              <table class="table table--sm" id="calcAnnualTable">
+                <thead><tr><th>Ano</th><th>Aportado</th><th>Rendimento</th><th>Total</th></tr></thead>
+                <tbody id="calcAnnualBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ═══ CHAT IA ═══ -->
+<button class="chat-fab" id="chatFab" title="Assistente IA">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.959 9.959 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z" stroke="currentColor" stroke-width="1.8"/><path d="M8 10h8M8 14h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  <span class="chat-fab__badge" id="chatBadge" style="display:none"></span>
+</button>
+
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-panel__header">
+    <div class="chat-panel__title">
+      <div class="chat-panel__avatar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <span class="chat-panel__name">Assistente Financeiro</span>
+        <span class="chat-panel__status" id="chatStatus">IA · Claude</span>
+      </div>
+    </div>
+    <div class="chat-panel__actions">
+      <button class="icon-btn" id="chatSettings" title="Configurar API Key">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z" stroke="currentColor" stroke-width="1.8"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" stroke="currentColor" stroke-width="1.8"/></svg>
+      </button>
+      <button class="icon-btn" id="chatClose" title="Fechar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- API Key setup -->
+  <div class="chat-setup" id="chatSetup">
+    <div class="chat-setup__icon">🔑</div>
+    <p class="chat-setup__title">Configure sua API Key</p>
+    <p class="chat-setup__desc">Insira sua chave da API Anthropic para usar o assistente. A chave é salva apenas no seu navegador.</p>
+    <input type="password" class="input" id="apiKeyInput" placeholder="sk-ant-..." />
+    <button class="btn btn--primary" id="btnSaveKey" style="width:100%;margin-top:.75rem">Salvar e Conectar</button>
+    <p class="chat-setup__hint">Obtenha sua key em <strong>console.anthropic.com</strong></p>
+  </div>
+
+  <!-- Chat messages -->
+  <div class="chat-messages" id="chatMessages" style="display:none">
+    <div class="chat-welcome">
+      <p>Olá! Sou seu assistente financeiro. Pergunte sobre seus gastos, peça dicas ou um resumo do período. 💡</p>
+    </div>
+  </div>
+
+  <!-- Quick prompts -->
+  <div class="chat-prompts" id="chatPrompts" style="display:none">
+    <button class="prompt-chip" data-prompt="Como estão meus gastos este mês? Faça um resumo.">📊 Resumo do mês</button>
+    <button class="prompt-chip" data-prompt="Analise meus gastos e me dê 3 dicas práticas para economizar.">💡 Dicas para economizar</button>
+    <button class="prompt-chip" data-prompt="Em qual categoria estou gastando mais? Vale a pena reduzir?">🔍 Análise de gastos</button>
+    <button class="prompt-chip" data-prompt="Compare meu mês atual com o mês anterior. Melhorei ou piorei?">📈 Comparar meses</button>
+  </div>
+
+  <!-- Input -->
+  <div class="chat-input-area" id="chatInputArea" style="display:none">
+    <div class="chat-input-wrap">
+      <textarea class="chat-input" id="chatInput" placeholder="Pergunte sobre suas finanças..." rows="1"></textarea>
+      <button class="chat-send" id="chatSend">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13M22 2L15 22 11 13 2 9l20-7z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: TRANSAÇÃO ═══ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal__header">
+      <h3 class="modal__title" id="modalTitle">Nova Transação</h3>
+      <button class="icon-btn" id="modalClose"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="modal__body">
+      <form id="formTransaction" class="form">
+        <input type="hidden" id="editId" />
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Descrição <span class="req">*</span></label>
+            <input type="text" class="input" id="fDescricao" placeholder="Ex: Salário, Aluguel..." required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Valor (R$) <span class="req">*</span></label>
+            <input type="number" class="input" id="fValor" placeholder="0,00" step="0.01" min="0" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Tipo <span class="req">*</span></label>
+            <select class="select input" id="fTipo" required>
+              <option value="">Selecione</option>
+              <option value="receita">Receita</option>
+              <option value="despesa">Despesa</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Categoria <span class="req">*</span></label>
+            <select class="select input" id="fCategoria" required>
+              <option value="">Selecione</option>
+              <option>Alimentação</option><option>Moradia</option><option>Transporte</option>
+              <option>Saúde</option><option>Educação</option><option>Lazer</option>
+              <option>Salário</option><option>Freelance</option><option>Investimentos</option>
+              <option>Assinaturas</option><option>Beleza</option><option>Outros</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Data <span class="req">*</span></label>
+            <input type="date" class="input" id="fData" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Observação</label>
+            <input type="text" class="input" id="fObs" placeholder="Opcional..." />
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal__footer">
+      <button class="btn btn--ghost" id="btnCancelModal">Cancelar</button>
+      <button class="btn btn--primary" id="btnSaveTransaction">Salvar Transação</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: ORÇAMENTO ═══ -->
+<div class="modal-overlay" id="modalOrcamento">
+  <div class="modal">
+    <div class="modal__header">
+      <h3 class="modal__title">Meta de Orçamento</h3>
+      <button class="icon-btn" id="orcClose"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="modal__body">
+      <form id="formOrcamento" class="form">
+        <input type="hidden" id="orcEditId" />
+        <div class="form-group">
+          <label class="form-label">Categoria</label>
+          <select class="select input" id="orcCategoria">
+            <option>Alimentação</option><option>Moradia</option><option>Transporte</option>
+            <option>Saúde</option><option>Educação</option><option>Lazer</option>
+            <option>Assinaturas</option><option>Beleza</option><option>Outros</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Limite Mensal (R$)</label>
+          <input type="number" class="input" id="orcLimite" placeholder="0,00" step="0.01" min="0" required />
+        </div>
+      </form>
+    </div>
+    <div class="modal__footer">
+      <button class="btn btn--ghost" id="orcCancel">Cancelar</button>
+      <button class="btn btn--primary" id="orcSave">Salvar Meta</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: IMPORTAR CSV ═══ -->
+<div class="modal-overlay" id="modalImport">
+  <div class="modal modal--wide">
+    <div class="modal__header">
+      <h3 class="modal__title">Importar Extrato Nubank</h3>
+      <button class="icon-btn" id="importClose"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="modal__body">
+      <div id="importStep1">
+        <div class="upload-zone" id="uploadZone">
+          <div class="upload-zone__icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <p class="upload-zone__text">Arraste os arquivos CSV ou clique para selecionar</p>
+          <p class="upload-zone__hint">Formato Nubank · pode selecionar vários arquivos de uma vez</p>
+          <input type="file" id="csvFileInput" accept=".csv" multiple style="display:none" />
+          <button class="btn btn--ghost btn--sm" id="btnChooseFile">Selecionar arquivos</button>
+        </div>
+        <div id="fileList" class="file-list"></div>
+      </div>
+      <div id="importStep2" style="display:none">
+        <div class="import-summary" id="importSummary"></div>
+        <div class="import-table-wrap">
+          <table class="table">
+            <thead><tr><th><input type="checkbox" id="checkAll" checked /></th><th>Data</th><th>Descrição</th><th>Tipo</th><th>Categoria</th><th>Valor</th></tr></thead>
+            <tbody id="importTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="modal__footer">
+      <button class="btn btn--ghost" id="importCancel">Cancelar</button>
+      <button class="btn btn--ghost" id="importBack" style="display:none">← Voltar</button>
+      <button class="btn btn--primary" id="importNext">Avançar →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: META ═══ -->
+<div class="modal-overlay" id="modalGoal">
+  <div class="modal">
+    <div class="modal__header">
+      <h3 class="modal__title" id="goalModalTitle">Nova Meta</h3>
+      <button class="icon-btn" id="goalModalClose"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="modal__body">
+      <form id="goalForm" class="form">
+        <input type="hidden" id="goalEditId" />
+        <div class="form-row">
+          <div class="form-group" style="grid-column:1/-1">
+            <label class="form-label">Título <span class="req">*</span></label>
+            <input type="text" class="input" id="goalTitulo" placeholder="Ex: Reserva de emergência" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Módulo <span class="req">*</span></label>
+            <select class="select input" id="goalModulo"></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tipo <span class="req">*</span></label>
+            <select class="select input" id="goalTipo"></select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Meta (alvo) <span class="req">*</span></label>
+            <input type="number" class="input" id="goalMeta" placeholder="10000" step="any" min="0" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Progresso atual</label>
+            <input type="number" class="input" id="goalAtual" placeholder="0" step="any" min="0" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Unidade</label>
+            <input type="text" class="input" id="goalUnidade" placeholder="R$, %, dias, km…" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Prazo</label>
+            <input type="date" class="input" id="goalPrazo" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Status</label>
+            <select class="select input" id="goalStatus">
+              <option value="ativa">Ativa</option>
+              <option value="pausada">Pausada</option>
+              <option value="concluida">Concluída</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Descrição</label>
+            <input type="text" class="input" id="goalDescricao" placeholder="Detalhe opcional…" />
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal__footer">
+      <button class="btn btn--ghost" id="goalCancel">Cancelar</button>
+      <button class="btn btn--primary" id="goalSave">Salvar Meta</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: PROGRESSO ═══ -->
+<div class="modal-overlay" id="modalProgress">
+  <div class="modal" style="max-width:420px">
+    <div class="modal__header">
+      <h3 class="modal__title">Atualizar Progresso</h3>
+      <button class="icon-btn" id="progClose"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="modal__body">
+      <input type="hidden" id="progEditId" />
+      <p id="progTitulo" style="font-weight:600;color:var(--text);margin:0 0 1rem"></p>
+      <div class="form-group">
+        <label class="form-label">Valor atual <span id="progMeta" style="color:var(--text3);font-weight:400"></span></label>
+        <div style="display:flex;align-items:center;gap:.5rem">
+          <input type="number" class="input" id="progAtual" step="any" min="0" style="flex:1" />
+          <span id="progUnidade" style="color:var(--text3);font-size:.85rem;white-space:nowrap"></span>
+        </div>
+      </div>
+      <div class="prog-preview">
+        <div class="progress" style="height:8px">
+          <div class="progress__fill" id="progBar" style="width:0%;transition:width .3s"></div>
+        </div>
+        <span class="prog-preview__pct" id="progPct">0%</span>
+      </div>
+    </div>
+    <div class="modal__footer">
+      <button class="btn btn--ghost" id="progCancel">Cancelar</button>
+      <button class="btn btn--primary" id="progSave">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: EMPRESA ═══ -->
+<div class="modal-overlay" id="modalBiz">
+  <div class="modal">
+    <div class="modal__header">
+      <h3 class="modal__title" id="bizModalTitle">Nova Empresa</h3>
+      <button class="icon-btn" id="bizModalClose"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="modal__body">
+      <form id="bizForm" class="form">
+        <input type="hidden" id="bizEditId" />
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Nome <span class="req">*</span></label>
+            <input type="text" class="input" id="bizNome" placeholder="Nome da empresa" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tipo</label>
+            <select class="select input" id="bizTipo"></select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Descrição</label>
+            <input type="text" class="input" id="bizDesc" placeholder="Ramo de atuação..." />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Cor</label>
+            <input type="color" class="input" id="bizCor" style="height:42px;padding:4px 8px;cursor:pointer" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Pró Labore padrão (R$)</label>
+          <input type="number" class="input" id="bizProLabore" placeholder="0,00" step="0.01" min="0" />
+        </div>
+      </form>
+    </div>
+    <div class="modal__footer">
+      <button class="btn btn--ghost" id="bizCancel">Cancelar</button>
+      <button class="btn btn--primary" id="bizSave">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: CLIENTE ═══ -->
+<div class="modal-overlay" id="modalClient">
+  <div class="modal">
+    <div class="modal__header">
+      <h3 class="modal__title" id="clientModalTitle">Novo Cliente</h3>
+      <button class="icon-btn" id="clientModalClose"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="modal__body">
+      <form id="clientForm" class="form">
+        <input type="hidden" id="clientEditId" />
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Nome <span class="req">*</span></label>
+            <input type="text" class="input" id="clientNome" placeholder="Nome completo ou empresa" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Empresa <span class="req">*</span></label>
+            <select class="select input" id="clientBiz"></select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">E-mail</label>
+            <input type="email" class="input" id="clientEmail" placeholder="email@exemplo.com" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Telefone</label>
+            <input type="text" class="input" id="clientTel" placeholder="(11) 99999-0000" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Observações</label>
+          <input type="text" class="input" id="clientObs" placeholder="Notas sobre o cliente..." />
+        </div>
+      </form>
+    </div>
+    <div class="modal__footer">
+      <button class="btn btn--ghost" id="clientCancel">Cancelar</button>
+      <button class="btn btn--primary" id="clientSave">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: PRODUTO ═══ -->
+<div class="modal-overlay" id="modalProduct">
+  <div class="modal">
+    <div class="modal__header">
+      <h3 class="modal__title" id="prodModalTitle">Novo Produto/Serviço</h3>
+      <button class="icon-btn" id="prodModalClose"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="modal__body">
+      <form id="prodForm" class="form">
+        <input type="hidden" id="prodEditId" />
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Nome <span class="req">*</span></label>
+            <input type="text" class="input" id="prodNome" placeholder="Nome do produto/serviço" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tipo</label>
+            <select class="select input" id="prodTipo">
+              <option value="servico">Serviço</option>
+              <option value="produto">Produto</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Preço (R$) <span class="req">*</span></label>
+            <input type="number" class="input" id="prodPreco" placeholder="0,00" step="0.01" min="0" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Unidade</label>
+            <input type="text" class="input" id="prodUnidade" placeholder="hora, projeto, mês..." />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Empresa <span class="req">*</span></label>
+            <select class="select input" id="prodBiz"></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Observações</label>
+            <input type="text" class="input" id="prodObs" placeholder="Detalhes opcionais..." />
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal__footer">
+      <button class="btn btn--ghost" id="prodCancel">Cancelar</button>
+      <button class="btn btn--primary" id="prodSave">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: TAREFA ═══ -->
+<div class="modal-overlay" id="modalTask">
+  <div class="modal">
+    <div class="modal__header">
+      <h3 class="modal__title" id="taskModalTitle">Nova Tarefa</h3>
+      <button class="icon-btn" id="taskModalClose"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="modal__body">
+      <form id="taskForm" class="form">
+        <input type="hidden" id="taskEditId" />
+        <div class="form-group">
+          <label class="form-label">Título <span class="req">*</span></label>
+          <input type="text" class="input" id="taskTitulo" placeholder="O que precisa ser feito?" required />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Projeto</label>
+            <select class="select input" id="taskProject"></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Prioridade</label>
+            <select class="select input" id="taskPrioridade">
+              <option value="alta">🔴 Alta</option>
+              <option value="media" selected>🟡 Média</option>
+              <option value="baixa">🟢 Baixa</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Status</label>
+            <select class="select input" id="taskStatus">
+              <option value="todo">📋 A Fazer</option>
+              <option value="doing">⚙️ Em Andamento</option>
+              <option value="done">✅ Concluído</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Prazo</label>
+            <input type="date" class="input" id="taskPrazo" />
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal__footer">
+      <button class="btn btn--ghost" id="taskCancel">Cancelar</button>
+      <button class="btn btn--primary" id="taskSave">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: PROJETO ═══ -->
+<div class="modal-overlay" id="modalProject">
+  <div class="modal" style="max-width:440px">
+    <div class="modal__header">
+      <h3 class="modal__title" id="projModalTitle">Novo Projeto</h3>
+      <button class="icon-btn" id="projModalClose"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="modal__body">
+      <form id="projForm" class="form">
+        <input type="hidden" id="projEditId" />
+        <div class="form-group">
+          <label class="form-label">Nome <span class="req">*</span></label>
+          <input type="text" class="input" id="projNome" placeholder="Nome do projeto" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Descrição</label>
+          <input type="text" class="input" id="projDesc" placeholder="Objetivo do projeto..." />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Status</label>
+            <select class="select input" id="projStatus">
+              <option value="ativo">Ativo</option>
+              <option value="pausado">Pausado</option>
+              <option value="concluido">Concluído</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Cor</label>
+            <input type="color" class="input" id="projCor" style="height:42px;padding:4px 8px;cursor:pointer" />
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal__footer">
+      <button class="btn btn--ghost" id="projCancel">Cancelar</button>
+      <button class="btn btn--primary" id="projSave">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: HÁBITO ═══ -->
+<div class="modal-overlay" id="modalHabit">
+  <div class="modal" style="max-width:440px">
+    <div class="modal__header">
+      <h3 class="modal__title" id="habitModalTitle">Novo Hábito</h3>
+      <button class="icon-btn" id="habitModalClose"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="modal__body">
+      <form id="habitForm" class="form">
+        <input type="hidden" id="habitEditId" />
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Nome <span class="req">*</span></label>
+            <input type="text" class="input" id="habitNome" placeholder="Ex: Beber 2L de água" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Ícone</label>
+            <select class="select input" id="habitIcone"></select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Frequência</label>
+            <select class="select input" id="habitFreq">
+              <option value="diario">Diário</option>
+              <option value="semanal">Semanal</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Meta (dias)</label>
+            <input type="number" class="input" id="habitMeta" value="30" min="1" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Status</label>
+            <select class="select input" id="habitStatus">
+              <option value="ativo">Ativo</option>
+              <option value="pausado">Pausado</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Cor</label>
+            <input type="color" class="input" id="habitCor" style="height:42px;padding:4px 8px;cursor:pointer" />
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal__footer">
+      <button class="btn btn--ghost" id="habitCancel">Cancelar</button>
+      <button class="btn btn--primary" id="habitSave">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: CONFIRMAR ═══ -->
+<div class="modal-overlay" id="modalConfirm">
+  <div class="modal" style="max-width:400px">
+    <div class="modal__header">
+      <h3 class="modal__title" id="confirmTitle">Confirmar</h3>
+    </div>
+    <div class="modal__body" style="padding-top:.5rem">
+      <p id="confirmMsg" style="color:var(--text2);margin:0;line-height:1.55;font-size:.9rem"></p>
+    </div>
+    <div class="modal__footer">
+      <button class="btn btn--ghost" id="confirmCancel">Cancelar</button>
+      <button class="btn btn--danger" id="confirmOk">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: IMPORTAR CSV — NEGÓCIOS ═══ -->
+<div class="modal-overlay" id="modalBizImport">
+  <div class="modal modal--wide">
+    <div class="modal__header">
+      <h3 class="modal__title">Importar Extrato — Negócios</h3>
+      <button class="icon-btn" id="bizImportClose"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="modal__body">
+
+      <!-- Step 1: empresa + arquivo -->
+      <div id="bizImportStep1">
+        <div class="form-group" style="margin-bottom:1.25rem">
+          <label class="form-label" style="font-size:.9rem;font-weight:600">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="margin-right:.35rem;vertical-align:middle"><rect x="2" y="7" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" stroke="currentColor" stroke-width="1.8"/></svg>
+            Selecione a empresa <span class="req">*</span>
+          </label>
+          <select class="select input" id="bizImportEmpresa" style="max-width:360px">
+            <option value="">Escolha a empresa do extrato…</option>
+          </select>
+          <p style="font-size:.75rem;color:var(--text3);margin:.4rem 0 0">Todas as transações importadas serão vinculadas a esta empresa.</p>
+        </div>
+
+        <div class="upload-zone" id="bizUploadZone">
+          <div class="upload-zone__icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <p class="upload-zone__text">Arraste o CSV ou clique para selecionar</p>
+          <p class="upload-zone__hint">Formato Nubank · pode selecionar vários arquivos</p>
+          <input type="file" id="bizCsvFileInput" accept=".csv" multiple style="display:none" />
+          <button class="btn btn--ghost btn--sm" id="btnBizChooseFile">Selecionar arquivos</button>
+        </div>
+        <div id="bizFileList" class="file-list"></div>
+      </div>
+
+      <!-- Step 2: preview -->
+      <div id="bizImportStep2" style="display:none">
+        <div class="import-summary" id="bizImportSummary"></div>
+        <div class="import-table-wrap">
+          <table class="table">
+            <thead><tr>
+              <th><input type="checkbox" id="bizCheckAll" checked /></th>
+              <th>Data</th><th>Descrição</th><th>Tipo</th><th>Categoria</th><th>Valor</th>
+            </tr></thead>
+            <tbody id="bizImportTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal__footer">
+      <button class="btn btn--ghost" id="bizImportCancel">Cancelar</button>
+      <button class="btn btn--ghost" id="bizImportBack" style="display:none">← Voltar</button>
+      <button class="btn btn--primary" id="bizImportNext" disabled>Avançar →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: LANÇAMENTO NEGÓCIO ═══ -->
+<div class="modal-overlay" id="modalBizTxn">
+  <div class="modal modal--wide">
+    <div class="modal__header">
+      <h3 class="modal__title" id="finTxnModalTitle">Novo Lançamento</h3>
+      <button class="icon-btn" id="finTxnModalClose"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="modal__body">
+      <form id="finTxnForm" class="form" onsubmit="return false">
+        <input type="hidden" id="finTxnEditId" />
+
+        <!-- Tipo destacado no topo -->
+        <div class="fin-tipo-row" style="margin-bottom:1rem">
+          <label class="fin-tipo-opt">
+            <input type="radio" name="finTxnTipoR" id="finTxnTipoReceita" value="receita" checked />
+            <span class="fin-tipo-label fin-tipo-label--rec">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+              Receita / Venda
+            </span>
+          </label>
+          <label class="fin-tipo-opt">
+            <input type="radio" name="finTxnTipoR" id="finTxnTipoDespesa" value="despesa" />
+            <span class="fin-tipo-label fin-tipo-label--des">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M19 12l-7 7-7-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+              Despesa / Custo
+            </span>
+          </label>
+        </div>
+
+        <!-- Hidden select kept for JS compatibility -->
+        <select id="finTxnTipo" style="display:none">
+          <option value="receita">receita</option>
+          <option value="despesa">despesa</option>
+        </select>
+
+        <!-- Seletor de produto (apenas para Receitas) -->
+        <div id="finTxnProdutoWrap" style="display:none">
+          <div class="form-group" style="margin-bottom:1rem">
+            <label class="form-label">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style="margin-right:.3rem;vertical-align:middle"><path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2zM16 3H8L6 7h12l-2-4z" stroke="currentColor" stroke-width="1.8"/></svg>
+              Produto / Serviço <span class="req">*</span>
+            </label>
+            <select class="select input" id="finTxnProduto">
+              <option value="">Selecione um produto da empresa…</option>
+            </select>
+            <p id="finTxnProdutoHint" style="font-size:.72rem;color:var(--text3);margin:.3rem 0 0"></p>
+          </div>
+          <div class="form-group" style="margin-bottom:1rem">
+            <label class="form-label">Quantidade</label>
+            <input type="number" class="input" id="finTxnQtd" value="1" min="1" step="1" style="max-width:120px" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group" style="grid-column:1/-1">
+            <label class="form-label">Descrição <span class="req">*</span></label>
+            <input type="text" class="input" id="finTxnDesc" placeholder="Ex: Venda site institucional, Fatura Adobe…" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Valor (R$) <span class="req">*</span></label>
+            <input type="number" class="input" id="finTxnValor" placeholder="0,00" step="0.01" min="0" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Data <span class="req">*</span></label>
+            <input type="date" class="input" id="finTxnData" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Categoria <span class="req">*</span></label>
+            <select class="select input" id="finTxnCat"></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Empresa <span class="req">*</span></label>
+            <select class="select input" id="finTxnBiz"></select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Observações</label>
+          <input type="text" class="input" id="finTxnObs" placeholder="Número de nota, cliente, referência…" />
+        </div>
+      </form>
+    </div>
+    <div class="modal__footer">
+      <button class="btn btn--ghost" id="finTxnCancel">Cancelar</button>
+      <button class="btn btn--primary" id="finTxnSave">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" stroke="currentColor" stroke-width="1.8"/><path d="M17 21v-8H7v8M7 3v5h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Salvar Lançamento
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: DASHBOARD DA EMPRESA ═══ -->
+<div class="modal-overlay" id="modalCompanyDash">
+  <div class="modal modal--dashboard">
+    <div class="modal__header">
+      <div style="display:flex;align-items:center;gap:.75rem">
+        <span id="dashDot" style="width:14px;height:14px;border-radius:50%;background:#6366f1;flex-shrink:0"></span>
+        <div>
+          <h3 class="modal__title" id="dashCompanyTitle" style="margin:0">Empresa</h3>
+          <span id="dashCompanyType" style="font-size:.8rem;color:var(--text3)"></span>
+        </div>
+      </div>
+      <button class="icon-btn" id="dashCompanyClose"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div style="padding:0 1.5rem .5rem">
+      <p id="dashCompanyDesc" style="margin:0;font-size:.85rem;color:var(--text3)"></p>
+    </div>
+
+    <!-- Sub-tabs -->
+    <div class="sub-tabs" style="padding:0 1.5rem">
+      <button class="dash-tab active" data-tab="geral">📊 Geral</button>
+      <button class="dash-tab" data-tab="txns">💳 Transações</button>
+      <button class="dash-tab" data-tab="clients">👥 Clientes</button>
+      <button class="dash-tab" data-tab="products">📦 Produtos</button>
+      <button class="dash-tab" data-tab="prolabore">💸 Pró Labore</button>
+    </div>
+
+    <div class="modal__body" style="padding-top:.75rem">
+
+      <!-- Geral -->
+      <div id="dash-panel-geral">
+        <div class="kpi-grid" style="margin-bottom:1rem">
+          <div class="kpi-card kpi-card--green"><div class="kpi-card__left"><span class="kpi-card__label">Receita</span><span class="kpi-card__value" id="dashRec">—</span></div></div>
+          <div class="kpi-card kpi-card--red"><div class="kpi-card__left"><span class="kpi-card__label">Despesa</span><span class="kpi-card__value" id="dashDes">—</span></div></div>
+          <div class="kpi-card kpi-card--blue"><div class="kpi-card__left"><span class="kpi-card__label">Lucro</span><span class="kpi-card__value" id="dashLuc">—</span></div></div>
+          <div class="kpi-card kpi-card--purple"><div class="kpi-card__left"><span class="kpi-card__label">Margem</span><span class="kpi-card__value" id="dashMar">—</span></div></div>
+        </div>
+        <canvas id="chartCompanyDash" height="200"></canvas>
+      </div>
+
+      <!-- Transações -->
+      <div id="dash-panel-txns" style="display:none">
+        <table class="table"><thead><tr><th>Data</th><th>Descrição</th><th>Cat.</th><th>Tipo</th><th>Valor</th></tr></thead>
+        <tbody id="dashTxnsBody"></tbody></table>
+      </div>
+
+      <!-- Clientes -->
+      <div id="dash-panel-clients" style="display:none">
+        <table class="table"><thead><tr><th>Nome</th><th>E-mail</th><th>Telefone</th><th>Obs</th></tr></thead>
+        <tbody id="dashClientsBody"></tbody></table>
+      </div>
+
+      <!-- Produtos -->
+      <div id="dash-panel-products" style="display:none">
+        <table class="table"><thead><tr><th>Nome</th><th>Tipo</th><th>Preço</th><th>Unidade</th></tr></thead>
+        <tbody id="dashProductsBody"></tbody></table>
+      </div>
+
+      <!-- Pró Labore -->
+      <div id="dash-panel-prolabore" style="display:none">
+        <div class="card" style="margin-bottom:1rem;padding:1rem">
+          <h4 style="margin:0 0 .75rem;font-size:.95rem">Registrar retirada</h4>
+          <div style="display:flex;gap:.75rem;align-items:flex-end">
+            <div class="form-group" style="flex:1;margin:0">
+              <label class="form-label">Valor (R$)</label>
+              <input type="number" class="input" id="dashProLaboreVal" placeholder="0,00" step="0.01" min="0" />
+            </div>
+            <div id="dashPLBtnWrap">
+              <button class="btn btn--primary" onclick="window._biz.saveProLaboreDash()">Registrar</button>
+            </div>
+          </div>
+        </div>
+        <h4 style="margin:.5rem 0;font-size:.9rem;color:var(--text2)">Histórico</h4>
+        <div id="dashPLHistory"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: INVESTIMENTO ═══ -->
+<div class="modal-overlay" id="modalInv">
+  <div class="modal">
+    <div class="modal__header">
+      <h3 class="modal__title" id="invModalTitle">Novo Ativo</h3>
+      <button class="icon-btn" id="invModalClose"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="modal__body">
+      <form id="invForm" class="form">
+        <input type="hidden" id="invEditId" />
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Ativo <span class="req">*</span></label>
+            <input type="text" class="input" id="invAtivo" placeholder="Ex: PETR4, Tesouro IPCA+" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Categoria <span class="req">*</span></label>
+            <select class="select input" id="invCategoria">
+              <option>Renda Fixa</option>
+              <option>Tesouro Direto</option>
+              <option>CDB/LCI/LCA</option>
+              <option>Ações</option>
+              <option>FII</option>
+              <option>Crypto</option>
+              <option>Previdência</option>
+              <option>Outro</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Valor investido (R$) <span class="req">*</span></label>
+            <input type="number" class="input" id="invVlrInvest" placeholder="0,00" step="0.01" min="0" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Valor atual (R$)</label>
+            <input type="number" class="input" id="invVlrAtual" placeholder="0,00" step="0.01" min="0" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Data início</label>
+            <input type="date" class="input" id="invDataInicio" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Corretora</label>
+            <input type="text" class="input" id="invCorretora" placeholder="XP, Clear, Nubank..." />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Observações</label>
+          <input type="text" class="input" id="invObs" placeholder="Detalhes opcionais..." />
+        </div>
+      </form>
+    </div>
+    <div class="modal__footer">
+      <button class="btn btn--ghost" id="invCancel">Cancelar</button>
+      <button class="btn btn--primary" id="invSave">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: CONTA ═══ -->
+<div class="modal-overlay" id="modalConta">
+  <div class="modal">
+    <div class="modal__header">
+      <h3 class="modal__title" id="contaModalTitle">Nova Conta</h3>
+      <button class="icon-btn" id="contaModalClose"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="modal__body">
+      <form id="contaForm" class="form" onsubmit="return false">
+        <input type="hidden" id="contaEditId" />
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Nome da conta <span class="req">*</span></label>
+            <input type="text" class="input" id="contaNome" placeholder="Ex: Aluguel, Fatura Nubank…" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Quem (credor)</label>
+            <input type="text" class="input" id="contaCredor" placeholder="Ex: Imobiliária, Banco, Vivo…" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Categoria</label>
+            <select class="select input" id="contaCategoria"></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Vencimento</label>
+            <input type="date" class="input" id="contaVencimento" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Valor total (R$) <span class="req">*</span></label>
+            <input type="number" class="input" id="contaValor" placeholder="0,00" step="0.01" min="0" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Já pago (R$)</label>
+            <input type="number" class="input" id="contaValorPago" placeholder="0,00" step="0.01" min="0" value="0" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-check">
+            <input type="checkbox" id="contaRecorrente" checked />
+            <span>Conta recorrente (mensal)</span>
+          </label>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Observações</label>
+          <input type="text" class="input" id="contaObs" placeholder="Parcela, referência, nº do contrato…" />
+        </div>
+      </form>
+    </div>
+    <div class="modal__footer">
+      <button class="btn btn--ghost" id="contaCancel">Cancelar</button>
+      <button class="btn btn--primary" id="contaSave">Salvar Conta</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="main.js"></script>
+</body>
+</html>
