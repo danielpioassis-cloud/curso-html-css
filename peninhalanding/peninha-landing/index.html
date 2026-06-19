@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ===== SEO / META ===== -->
+  <title>Peninha Produções & Marketing | Seja visto. Seja lembrado.</title>
+  <meta name="description" content="Equipe completa de marketing para sua empresa vender mais em Volta Redonda e região. Social media, design, tráfego pago e produção de vídeo. +25 anos de mercado.">
+  <meta name="theme-color" content="#0A0A0A">
+
+  <!-- Open Graph (compartilhamento em redes) -->
+  <meta property="og:title" content="Peninha Produções & Marketing">
+  <meta property="og:description" content="Marketing é venda. Equipe completa para sua empresa ser vista e lembrada.">
+  <meta property="og:type" content="website">
+
+  <!-- ===== GOOGLE FONTS ===== -->
+  <!-- Anton: títulos impactantes | Poppins: textos legíveis -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- ===== ÍCONES (Lucide via CDN) ===== -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- ===== CSS ===== -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- ============================================================= -->
+  <!-- 1. HEADER FIXO                                                -->
+  <!-- ============================================================= -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <!-- Logo -->
+      <a href="#hero" class="logo" aria-label="Peninha - Início">
+        Peninha<span class="logo__dot">.</span>
+      </a>
+
+      <!-- Menu desktop -->
+      <nav class="nav" id="nav" aria-label="Menu principal">
+        <ul class="nav__list">
+          <li><a href="#solucoes" class="nav__link">Soluções</a></li>
+          <li><a href="#numeros" class="nav__link">Resultados</a></li>
+          <li><a href="#contato" class="nav__link">Contato</a></li>
+        </ul>
+        <!-- CTA dentro do nav para aparecer no menu mobile aberto -->
+        <a href="https://wa.me/55XXXXXXXXXXX?text=Ol%C3%A1!%20Quero%20falar%20com%20a%20Peninha%20sobre%20marketing."
+           class="btn btn--primary nav__cta" target="_blank" rel="noopener">
+          Fale com a gente
+        </a>
+      </nav>
+
+      <!-- Botão hambúrguer (mobile) -->
+      <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ============================================================= -->
+    <!-- 2. HERO (primeira dobra)                                      -->
+    <!-- ============================================================= -->
+    <section class="hero" id="hero">
+      <!-- Formas gráficas laranja de fundo -->
+      <div class="hero__glow hero__glow--1" aria-hidden="true"></div>
+      <div class="hero__glow hero__glow--2" aria-hidden="true"></div>
+
+      <div class="container hero__inner">
+        <!-- Selo de confiança -->
+        <span class="hero__badge fade-in">
+          <i data-lucide="badge-check"></i> +25 anos de mercado em Volta Redonda
+        </span>
+
+        <!-- Headline principal -->
+        <h1 class="hero__title fade-in">
+          Marketing é <span class="text-orange">venda.</span><br>
+          Seja visto. Seja lembrado.
+        </h1>
+
+        <!-- Subheadline -->
+        <p class="hero__subtitle fade-in">
+          Equipe completa de marketing para sua empresa vender mais —
+          social media, design, tráfego e produção de vídeo.
+        </p>
+
+        <!-- Botões de ação -->
+        <div class="hero__actions fade-in">
+          <a href="https://wa.me/55XXXXXXXXXXX?text=Quero%20vender%20mais%20com%20a%20Peninha!"
+             class="btn btn--primary btn--lg" target="_blank" rel="noopener">
+            Quero vender mais
+          </a>
+          <a href="#numeros" class="btn btn--outline btn--lg">Ver resultados</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- 3. EM 3 PASSOS                                                -->
+    <!-- ============================================================= -->
+    <section class="steps section" id="passos">
+      <div class="container">
+        <header class="section__head fade-in">
+          <span class="section__tag">Simples assim</span>
+          <h2 class="section__title">Comece em <span class="text-orange">3 passos</span></h2>
+        </header>
+
+        <div class="steps__grid">
+          <!-- Passo 1 -->
+          <article class="step fade-in">
+            <span class="step__num">01</span>
+            <h3 class="step__title">Você fala com a gente</h3>
+            <p class="step__text">Conta o desafio do seu negócio. A primeira conversa é rápida e sem compromisso.</p>
+          </article>
+          <!-- Passo 2 -->
+          <article class="step fade-in">
+            <span class="step__num">02</span>
+            <h3 class="step__title">Montamos a estratégia</h3>
+            <p class="step__text">Uma equipe completa cuida de tudo: conteúdo, design, tráfego e vídeo.</p>
+          </article>
+          <!-- Passo 3 -->
+          <article class="step fade-in">
+            <span class="step__num">03</span>
+            <h3 class="step__title">Sua marca vende mais</h3>
+            <p class="step__text">Mais presença, mais clientes. Você acompanha os resultados de perto.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- 4. SOLUÇÕES (grid de cards)                                   -->
+    <!-- ============================================================= -->
+    <section class="solutions section section--alt" id="solucoes">
+      <div class="container">
+        <header class="section__head fade-in">
+          <span class="section__tag">O que fazemos</span>
+          <h2 class="section__title">Soluções que <span class="text-orange">colocam você no mapa</span></h2>
+          <p class="section__subtitle">Tudo o que sua marca precisa para ser vista, em um só lugar.</p>
+        </header>
+
+        <div class="solutions__grid">
+          <!-- Card: Social Media -->
+          <article class="card fade-in">
+            <div class="card__icon"><i data-lucide="instagram"></i></div>
+            <h3 class="card__title">Social Media</h3>
+            <p class="card__text">Gestão estratégica das suas redes para engajar e converter seguidores em clientes.</p>
+          </article>
+          <!-- Card: Design Gráfico -->
+          <article class="card fade-in">
+            <div class="card__icon"><i data-lucide="palette"></i></div>
+            <h3 class="card__title">Design Gráfico</h3>
+            <p class="card__text">Identidade visual e peças que fazem sua marca ser reconhecida em segundos.</p>
+          </article>
+          <!-- Card: Tráfego Pago -->
+          <article class="card fade-in">
+            <div class="card__icon"><i data-lucide="trending-up"></i></div>
+            <h3 class="card__title">Gestão de Tráfego Pago</h3>
+            <p class="card__text">Anúncios certos, para as pessoas certas, com retorno medido a cada real investido.</p>
+          </article>
+          <!-- Card: Produção de Vídeo -->
+          <article class="card fade-in">
+            <div class="card__icon"><i data-lucide="video"></i></div>
+            <h3 class="card__title">Produção de Vídeo</h3>
+            <p class="card__text">Videomaker e câmera profissional para conteúdos que prendem a atenção.</p>
+          </article>
+          <!-- Card: Edição -->
+          <article class="card fade-in">
+            <div class="card__icon"><i data-lucide="scissors"></i></div>
+            <h3 class="card__title">Edição</h3>
+            <p class="card__text">Cortes, reels e vídeos editados com ritmo e qualidade de cinema.</p>
+          </article>
+          <!-- Card: Painel de LED -->
+          <article class="card fade-in">
+            <div class="card__icon"><i data-lucide="monitor"></i></div>
+            <h3 class="card__title">Painel de LED</h3>
+            <p class="card__text">Mídia OOH em ponto estratégico de Volta Redonda. Sua marca vista por milhares todo dia.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- 5. OFERTA / PLANO ÂNCORA                                      -->
+    <!-- ============================================================= -->
+    <section class="offer section" id="plano">
+      <div class="container">
+        <div class="offer__card fade-in">
+          <div class="offer__head">
+            <span class="section__tag">Plano completo</span>
+            <h2 class="offer__title">
+              Equipe completa de marketing<br>
+              a partir de <span class="text-orange">R$ 1.599/mês</span>
+            </h2>
+            <p class="offer__subtitle">Um time inteiro pelo preço de menos de um funcionário.</p>
+          </div>
+
+          <!-- Lista do que inclui -->
+          <ul class="offer__list">
+            <li><i data-lucide="check"></i> Social media dedicado</li>
+            <li><i data-lucide="check"></i> Designer gráfico</li>
+            <li><i data-lucide="check"></i> Gestor de tráfego pago</li>
+            <li><i data-lucide="check"></i> Videomaker</li>
+            <li><i data-lucide="check"></i> Editor de vídeo</li>
+            <li><i data-lucide="check"></i> Câmera profissional</li>
+          </ul>
+
+          <a href="https://wa.me/55XXXXXXXXXXX?text=Quero%20o%20plano%20completo%20de%20marketing%20da%20Peninha!"
+             class="btn btn--primary btn--lg btn--block" target="_blank" rel="noopener">
+            Quero esse plano
+          </a>
+
+          <p class="offer__seal">
+            <i data-lucide="shield-check"></i> Sem fidelidade longa — cancele quando quiser
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- 6. PROVA SOCIAL / NÚMEROS (contadores animados)              -->
+    <!-- ============================================================= -->
+    <!-- data-target = valor final | data-suffix = texto após o número -->
+    <section class="numbers section section--alt" id="numeros">
+      <div class="container">
+        <header class="section__head fade-in">
+          <span class="section__tag">Resultados</span>
+          <h2 class="section__title">Números que <span class="text-orange">falam por nós</span></h2>
+        </header>
+
+        <div class="numbers__grid">
+          <div class="stat fade-in">
+            <span class="stat__num" data-target="25" data-prefix="+">0</span>
+            <span class="stat__label">anos de mercado</span>
+          </div>
+          <div class="stat fade-in">
+            <span class="stat__num" data-target="400" data-prefix="+">0</span>
+            <span class="stat__label">visualizações/dia no painel de LED</span>
+          </div>
+          <div class="stat fade-in">
+            <!-- [QTD CLIENTES] -->
+            <span class="stat__num" data-target="150" data-prefix="+">0</span>
+            <span class="stat__label">clientes atendidos</span>
+          </div>
+          <div class="stat fade-in">
+            <!-- [QTD PROJETOS] -->
+            <span class="stat__num" data-target="500" data-prefix="+">0</span>
+            <span class="stat__label">projetos entregues</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- 7. NICHO MÉDICO                                               -->
+    <!-- ============================================================= -->
+    <section class="medical section" id="medico">
+      <div class="container medical__inner">
+        <div class="medical__content fade-in">
+          <span class="section__tag">Para a área da saúde</span>
+          <h2 class="section__title">Você, médico, <span class="text-orange">é visto?</span></h2>
+          <p class="medical__text">
+            Pacientes pesquisam antes de escolher. Se a sua presença online não passa
+            confiança, eles vão para o consultório ao lado. Cuidamos do marketing da
+            sua clínica com a ética e a sensibilidade que a área da saúde exige —
+            do Instagram ao tráfego segmentado para a sua especialidade.
+          </p>
+          <a href="https://wa.me/55XXXXXXXXXXX?text=Sou%20m%C3%A9dico%20e%20quero%20atrair%20mais%20pacientes."
+             class="btn btn--primary btn--lg" target="_blank" rel="noopener">
+            Quero atrair mais pacientes
+          </a>
+        </div>
+        <div class="medical__visual fade-in" aria-hidden="true">
+          <i data-lucide="stethoscope"></i>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- 8. SOBRE / LEGADO                                             -->
+    <!-- ============================================================= -->
+    <section class="about section section--alt" id="sobre">
+      <div class="container about__inner">
+        <!-- Foto da equipe -->
+        <div class="about__photo fade-in">
+          <!-- [FOTO] Substituir pela foto do Thiago / equipe -->
+          <img src="https://via.placeholder.com/520x600/1A1A1A/FF6A00?text=FOTO+EQUIPE"
+               alt="Equipe da Peninha Produções e Marketing" loading="lazy" width="520" height="600">
+        </div>
+
+        <div class="about__content fade-in">
+          <span class="section__tag">Nossa história</span>
+          <h2 class="section__title">Um legado de <span class="text-orange">geração em geração</span></h2>
+          <p class="about__text">
+            São mais de 25 anos colocando marcas de Volta Redonda e região no mapa.
+            Uma tradição de família construída no boca a boca, na confiança e em
+            resultado de verdade — passada de geração em geração.
+          </p>
+          <p class="about__text">
+            Unimos a experiência de quem conhece a região como ninguém à energia de
+            quem domina o marketing digital de hoje.
+          </p>
+          <p class="about__slogan">"Seja visto, seja lembrado."</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- 9. FAQ (accordion)                                            -->
+    <!-- ============================================================= -->
+    <section class="faq section" id="faq">
+      <div class="container container--narrow">
+        <header class="section__head fade-in">
+          <span class="section__tag">Dúvidas</span>
+          <h2 class="section__title">Perguntas <span class="text-orange">frequentes</span></h2>
+        </header>
+
+        <div class="faq__list">
+          <!-- Item FAQ: clique no botão abre/fecha via JS -->
+          <article class="faq__item fade-in">
+            <button class="faq__question" aria-expanded="false">
+              Quanto custa?
+              <i data-lucide="chevron-down" class="faq__chevron"></i>
+            </button>
+            <div class="faq__answer">
+              <p>Nosso plano completo de marketing começa em R$ 1.599/mês, com uma equipe inteira à disposição. O valor final depende do que o seu negócio precisa — e a gente monta isso junto com você.</p>
+            </div>
+          </article>
+
+          <article class="faq__item fade-in">
+            <button class="faq__question" aria-expanded="false">
+              Tem fidelidade?
+              <i data-lucide="chevron-down" class="faq__chevron"></i>
+            </button>
+            <div class="faq__answer">
+              <p>Sem fidelidade longa. Trabalhamos para você querer ficar pelo resultado, não por contrato. Você pode cancelar quando quiser.</p>
+            </div>
+          </article>
+
+          <article class="faq__item fade-in">
+            <button class="faq__question" aria-expanded="false">
+              Atendem minha cidade?
+              <i data-lucide="chevron-down" class="faq__chevron"></i>
+            </button>
+            <div class="faq__answer">
+              <p>Somos de Volta Redonda - RJ e atendemos toda a região. Para parte digital (social, design, tráfego), atendemos qualquer lugar do Brasil.</p>
+            </div>
+          </article>
+
+          <article class="faq__item fade-in">
+            <button class="faq__question" aria-expanded="false">
+              Em quanto tempo vejo resultado?
+              <i data-lucide="chevron-down" class="faq__chevron"></i>
+            </button>
+            <div class="faq__answer">
+              <p>Presença e consistência aparecem nas primeiras semanas. Resultados de venda e crescimento sustentável costumam ganhar força a partir de 60 a 90 dias de estratégia rodando.</p>
+            </div>
+          </article>
+
+          <article class="faq__item fade-in">
+            <button class="faq__question" aria-expanded="false">
+              Preciso ter time interno?
+              <i data-lucide="chevron-down" class="faq__chevron"></i>
+            </button>
+            <div class="faq__answer">
+              <p>Não. A gente é o seu time de marketing. Você cuida do seu negócio e nós cuidamos da sua presença e das suas campanhas.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- 10. CTA FINAL + FORMULÁRIO                                    -->
+    <!-- ============================================================= -->
+    <section class="contact section section--alt" id="contato">
+      <div class="container container--narrow">
+        <header class="section__head fade-in">
+          <span class="section__tag">Vamos começar</span>
+          <h2 class="section__title">Dar o próximo passo leva <span class="text-orange">menos de 1 minuto</span></h2>
+          <p class="section__subtitle">Preencha e a gente fala com você no WhatsApp.</p>
+        </header>
+
+        <!-- Form: validação + abre WhatsApp com mensagem pronta (script.js) -->
+        <form class="form fade-in" id="contactForm" novalidate>
+          <div class="form__group">
+            <label for="nome" class="form__label">Nome</label>
+            <input type="text" id="nome" name="nome" class="form__input" placeholder="Seu nome" required>
+            <span class="form__error" data-error-for="nome"></span>
+          </div>
+
+          <div class="form__group">
+            <label for="whatsapp" class="form__label">WhatsApp</label>
+            <input type="tel" id="whatsapp" name="whatsapp" class="form__input" placeholder="(24) 99999-9999" required>
+            <span class="form__error" data-error-for="whatsapp"></span>
+          </div>
+
+          <div class="form__group">
+            <label for="segmento" class="form__label">Segmento do negócio</label>
+            <select id="segmento" name="segmento" class="form__input" required>
+              <option value="" disabled selected>Selecione...</option>
+              <option value="Saúde / Médico">Saúde / Médico</option>
+              <option value="Comércio local">Comércio local</option>
+              <option value="Prestador de serviço">Prestador de serviço</option>
+              <option value="Indústria">Indústria</option>
+              <option value="Outro">Outro</option>
+            </select>
+            <span class="form__error" data-error-for="segmento"></span>
+          </div>
+
+          <button type="submit" class="btn btn--primary btn--lg btn--block">Quero ser visto</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================= -->
+  <!-- 11. FOOTER                                                    -->
+  <!-- ============================================================= -->
+  <footer class="footer" id="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="#hero" class="logo">Peninha<span class="logo__dot">.</span></a>
+        <p class="footer__slogan">Seja visto, seja lembrado.</p>
+      </div>
+
+      <nav class="footer__contact" aria-label="Contato">
+        <h4 class="footer__heading">Contato</h4>
+        <ul>
+          <li>
+            <a href="https://wa.me/55XXXXXXXXXXX" target="_blank" rel="noopener">
+              <i data-lucide="message-circle"></i> WhatsApp
+            </a>
+          </li>
+          <li>
+            <a href="https://instagram.com/peninhamkteproducoes" target="_blank" rel="noopener">
+              <i data-lucide="instagram"></i> @peninhamkteproducoes
+            </a>
+          </li>
+          <li>
+            <a href="#" target="_blank" rel="noopener">
+              <i data-lucide="youtube"></i> YouTube
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="footer__location">
+        <h4 class="footer__heading">Onde estamos</h4>
+        <p><i data-lucide="map-pin"></i> Volta Redonda - RJ</p>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p>&copy; <span id="year"></span> Peninha Produções & Marketing. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- ===== BOTÃO FLUTUANTE WHATSAPP ===== -->
+  <a href="https://wa.me/55XXXXXXXXXXX?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20saber%20mais."
+     class="wpp-float" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+    <i data-lucide="message-circle"></i>
+  </a>
+
+  <!-- ===== JS ===== -->
+  <script src="script.js"></script>
+</body>
+</html>
